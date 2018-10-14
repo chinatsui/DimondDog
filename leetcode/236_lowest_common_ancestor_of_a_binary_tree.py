@@ -34,7 +34,8 @@ class Solution(object):
             to_from[node.right] = node
             self._dfs(node.right, to_from)
 
-    def _path_to(self, root, node, to_from):
+    @staticmethod
+    def _path_to(root, node, to_from):
         path = []
         while node != root:
             path.append(node)

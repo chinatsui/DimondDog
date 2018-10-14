@@ -1,6 +1,4 @@
 class Solution:
-    # @param root, a tree link node
-    # @return nothing
     @staticmethod
     def connect(root):
         head = root
