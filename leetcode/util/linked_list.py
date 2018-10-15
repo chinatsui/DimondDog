@@ -1,7 +1,22 @@
+class Node(object):
+    def __init__(self, val, prev, next, child):
+        self.val = val
+        self.prev = prev
+        self.next = next
+        self.child = child
+
+
 class ListNode:
     def __init__(self, val):
         self.val = val
         self.next = None
+
+
+class RandomListNode(object):
+    def __init__(self, x):
+        self.label = x
+        self.next = None
+        self.random = None
 
 
 class LinkedList:
