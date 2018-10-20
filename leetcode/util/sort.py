@@ -60,7 +60,9 @@ class MergeSort:
     def sort(self, nums):
         if not nums:
             return
-        self._sort(nums, 0, len(nums) - 1)
+        left = 0
+        right = len(nums) - 1
+        self._sort(nums, left, right)
 
     def _sort(self, nums, left, right):
         if left >= right:
@@ -130,12 +132,46 @@ class MergeSort2:
 
 class HeapSort:
     def sort(self, nums):
-        pass
+        self._heapify(nums)
+        n = len(nums) - 1
+        while n:
+            self._swap(nums, 0, n)
+            n -= 1
+            self._sink(nums, 0, n)
+
+    def _heapify(self, nums):
+        n = len(nums) - 1
+        i = n // 2
+        while i >= 0:
+            self._sink(nums, i, n)
+            i -= 1
+
+    def _sink(self, nums, idx, bound):
+        l_idx = (idx + 1) * 2 - 1
+        r_idx = (idx + 1) * 2
+
+        if l_idx > bound:
+            return
+
+        if l_idx == bound or nums[l_idx] > nums[r_idx]:
+            if nums[idx] < nums[l_idx]:
+                self._swap(nums, idx, l_idx)
+                self._sink(nums, l_idx, bound)
+        elif nums[idx] < nums[r_idx]:
+            self._swap(nums, idx, r_idx)
+            self._sink(nums, r_idx, bound)
+
+    @staticmethod
+    def _swap(nums, src, dst):
+        tmp = nums[dst]
+        nums[dst] = nums[src]
+        nums[src] = tmp
 
 
 t_nums = [4, 6, 3, 2, 16, 32, 14, 67, 88, 65, 34]
 # QuickSort().sort(t_nums)
-# MergeSort().sort(t_nums)
+MergeSort().sort(t_nums)
 # QuickSort2().sort(t_nums)
 # MergeSort2().sort(t_nums)
+# HeapSort().sort(t_nums)
 print(t_nums)
