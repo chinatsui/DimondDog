@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution:
     def search(self, nums, target):
         """
         :type nums: List[int]
@@ -8,44 +8,35 @@ class Solution(object):
         if not nums:
             return -1
 
-        if len(nums) == 1:
-            return 0 if nums[0] == target else -1
-
-        pivot = self.find_pivot(nums)
-        lo = 0
-        hi = len(nums) - 1
-
-        if nums[pivot] <= target <= nums[hi]:
-            return self.binary_search(nums, pivot, hi, target)
-        elif lo <= pivot - 1:
-            return self.binary_search(nums, lo, pivot, target)
-        else:
-            return -1
-
-    @staticmethod
-    def find_pivot(nums):
-        lo = 0
-        hi = len(nums) - 1
-
+        lo, hi = 0, len(nums) - 1
         while lo < hi:
             mid = (lo + hi) // 2
-            if nums[mid] < nums[hi]:
-                hi = mid
+
+            if nums[lo] <= nums[mid]:
+                # lo...mid is sorted
+                if nums[lo] <= target <= nums[mid]:
+                    return self._binary_search(nums, lo, mid, target)
+                else:
+                    lo = mid + 1
             else:
-                lo = mid + 1
-        return lo
+                # mid...hi is sorted
+                if nums[mid] <= target <= nums[hi]:
+                    return self._binary_search(nums, mid, hi, target)
+                else:
+                    hi = mid
+        return lo if nums[lo] == target else -1
 
     @staticmethod
-    def binary_search(nums, lo, hi, target):
-        while lo <= hi:
+    def _binary_search(nums, lo, hi, target):
+        while lo < hi:
             mid = (lo + hi) // 2
             if nums[mid] == target:
                 return mid
             elif nums[mid] < target:
                 lo = mid + 1
             else:
-                hi = mid - 1
-        return -1
+                hi = mid
+        return lo if nums[lo] == target else -1
 
 
 t_res = Solution().search([4, 5, 6, 7, 0, 1, 2], 0)

@@ -1,22 +1,16 @@
 class Solution:
-    @staticmethod
-    def sqrt(x):
+    def sqrt(self, x):
         """
         :type x: int
         :rtype: int
         """
-        left = 0
-        right = x
-
-        while left <= right:
-            mid = (left + right) // 2
-
+        lo, hi = 0, x
+        while lo < hi:
+            mid = (lo + hi) // 2
             if mid ** 2 == x:
                 return mid
-            elif mid ** 2 > x:
-                right = mid - 1
+            elif mid ** 2 < x:
+                lo = mid + 1
             else:
-                left = mid + 1
-
-            if left > right:
-                return right
+                hi = mid
+        return lo if lo ** 2 == x else lo - 1

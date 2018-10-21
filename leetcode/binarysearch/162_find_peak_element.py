@@ -8,18 +8,18 @@ class Solution:
         if not nums:
             return -1
 
-        left, right = 0, len(nums) - 1
-        while left < right:
-            mid = (left + right) // 2
+        lo, hi = 0, len(nums) - 1
+        while lo + 1 < hi: # at least 3 elements
+            mid = (lo + hi) // 2
 
-            if mid == left:
-                break
-
-            if nums[mid - 1] < nums[mid] and nums[mid] > nums[mid + 1]:
+            if nums[mid] > nums[mid - 1] and nums[mid] > nums[mid + 1]:
                 return mid
             elif nums[mid] < nums[mid + 1]:
-                left = mid + 1
+                # mid is in left slope, peak is on the right of mid
+                lo = mid + 1
             else:
-                right = mid
-
-        return left if nums[left] > nums[right] else right
+                hi = mid
+        if lo == hi:
+            return lo
+        else:
+            return lo if nums[lo] > nums[hi] else hi
