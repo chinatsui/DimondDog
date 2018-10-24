@@ -2,26 +2,27 @@ class OnlineMigration:
 
     def __init__(self, name: str):
         self.name = name
-        self.dependencies = None
+        self.dependencies = set()
 
     def execute(self):
-        pass
+        print(self.name)
 
 
 class OnlineMigrationService:
     def __init__(self, migrations: set):
         for m in migrations:
-            self._dfs_verification(m, set(m))
+            self._verify_no_recycle(m, set([m]))
         self.migrations = self._flatten(migrations)
         self.completed = self._strip_completed(self.migrations)
-        self.pending = migrations - self.completed
+        self.pending = self.migrations - self.completed
 
     def run(self):
         pending_list = list(self.pending)
         while pending_list:
             cur = pending_list.pop(0)
-            if not cur.dependencies:
+            if not cur.dependencies - self.completed:
                 cur.execute()
+                self.completed.add(cur)
             else:
                 pending_list.append(cur)
 
@@ -51,4 +52,22 @@ class OnlineMigrationService:
 
     @staticmethod
     def _strip_completed(migrations: set):
-        return [m for m in migrations if m.name in ['B', 'C', 'E']]
+        return set([m for m in migrations if m.name in ['B', 'C', 'E']])
+
+
+t_m1 = OnlineMigration("1")
+t_m2 = OnlineMigration("2")
+t_m3 = OnlineMigration("3")
+t_m4 = OnlineMigration("4")
+t_m5 = OnlineMigration("5")
+t_m6 = OnlineMigration("6")
+t_m7 = OnlineMigration("7")
+
+t_m1.dependencies.add(t_m2)
+t_m2.dependencies.add(t_m3)
+t_m2.dependencies.add(t_m6)
+
+t_m4.dependencies.add(t_m5)
+
+t_migrations = {t_m1, t_m4, t_m7}
+OnlineMigrationService(t_migrations).run()
