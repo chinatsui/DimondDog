@@ -1,5 +1,6 @@
 class Solution:
-    def sqrt(self, x):
+    @staticmethod
+    def sqrt(x):
         """
         :type x: int
         :rtype: int
