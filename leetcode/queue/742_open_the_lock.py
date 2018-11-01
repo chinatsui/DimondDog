@@ -1,4 +1,7 @@
-class Solution:
+import time
+
+
+class Solution1:
     def openLock(self, deadends, target):
         """
         :type deadends: List[str]
@@ -6,53 +9,36 @@ class Solution:
         :rtype: int
         """
         res = -1
-        res_track = []
         visited = set()
 
         start = '0000'
-        q = [(start, 0, [])]
+        q = [(start, 0)]
         while q:
             item = q.pop(0)
             cur = item[0]
-            step = item[1]
-            track = item[2]
+            steps = item[1]
 
-            if cur in visited:
-                continue
-
-            if cur in deadends:
+            if cur in visited or cur in deadends:
                 continue
 
             if cur == target:
-                if res == -1:
-                    res = step
-                    res_track = track
-                else:
-                    res = min(res, step)
-                    res_track = track + [target]
+                res = steps if res == -1 else min(res, steps)
 
             visited.add(cur)
             for i in range(0, 4):
-                move_up = self._move(cur, i, True)
-                q.append((move_up, step + 1, track + [move_up]))
-                move_down = self._move(cur, i, False)
-                q.append((move_down, step + 1, track + [move_down]))
-        res_track.insert(0, '0000')
-        print(res_track)
+                q.append((self._move_up(cur, i), steps + 1))
+                q.append((self._move_down(cur, i), steps + 1))
         return res
 
     @staticmethod
-    def _move(cur, digit, is_up):
-        n_list = list(cur)
-        n = int(n_list[digit])
+    def _move_up(cur, digit):
+        val = (int(cur[digit]) + 1) % 10
+        return cur[:digit] + str(val) + cur[digit + 1:]
 
-        if is_up:
-            n = n + 1 if n < 9 else 0
-        else:
-            n = n - 1 if n > 0 else 9
-
-        n_list[digit] = n
-        return ''.join(str(n) for n in n_list)
+    @staticmethod
+    def _move_down(cur, digit):
+        val = (int(cur[digit]) - 1) % 10
+        return cur[:digit] + str(val) + cur[digit + 1:]
 
 
 class Solution2:
@@ -77,4 +63,12 @@ class Solution2:
         return -1
 
 
-print(Solution().openLock(["2110", "0202", "1222", "2221", "1010"], '2010'))
+t_start = time.clock()
+Solution1().openLock(["2110", "0202", "1222", "2221", "1010"], '2010')
+t_end = time.clock()
+print(t_end - t_start)
+
+t_start = time.clock()
+Solution2().openLock(["2110", "0202", "1222", "2221", "1010"], '2010')
+t_end = time.clock()
+print(t_end - t_start)
