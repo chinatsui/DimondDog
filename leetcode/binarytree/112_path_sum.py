@@ -17,7 +17,8 @@ class Solution:
             sum -= root.val
             return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
 
-    def _is_leaf(self, node):
+    @staticmethod
+    def _is_leaf(node):
         return True if node is None else node.left is None and node.right is None
 
 
