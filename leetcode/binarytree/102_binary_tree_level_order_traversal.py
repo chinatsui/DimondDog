@@ -12,9 +12,7 @@ class Solution:
         if root:
             q = [(0, root)]
             while q:
-                cur = q.pop(0)
-                cur_level = cur[0]
-                cur_node = cur[1]
+                (cur_level, cur_node) = q.pop(0)
 
                 if cur_level >= len(res):
                     cur_list = []

@@ -2,7 +2,7 @@ import time
 
 
 class Solution1:
-    def openLock(self, deadends, target):
+    def open_lock(self, deadends, target):
         """
         :type deadends: List[str]
         :type target: str
@@ -14,9 +14,7 @@ class Solution1:
         start = '0000'
         q = [(start, 0)]
         while q:
-            item = q.pop(0)
-            cur = item[0]
-            steps = item[1]
+            (cur, steps) = q.pop(0)
 
             if cur in visited or cur in deadends:
                 continue
@@ -43,7 +41,7 @@ class Solution1:
 
 class Solution2:
     @staticmethod
-    def openLock(deadends, target):
+    def open_lock(deadends, target):
         moved, q, cnt, move = set(deadends), ["0000"], 0, {str(i): [str((i + 1) % 10), str((i - 1) % 10)] for i in
                                                            range(10)}
         if "0000" in moved:
@@ -64,11 +62,11 @@ class Solution2:
 
 
 t_start = time.clock()
-Solution1().openLock(["2110", "0202", "1222", "2221", "1010"], '2010')
+Solution1().open_lock(["2110", "0202", "1222", "2221", "1010"], '2010')
 t_end = time.clock()
 print(t_end - t_start)
 
 t_start = time.clock()
-Solution2().openLock(["2110", "0202", "1222", "2221", "1010"], '2010')
+Solution2().open_lock(["2110", "0202", "1222", "2221", "1010"], '2010')
 t_end = time.clock()
 print(t_end - t_start)
