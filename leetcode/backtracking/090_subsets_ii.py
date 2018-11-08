@@ -1,5 +1,5 @@
 class Solution:
-    def subsetsWithDup(self, nums):
+    def subsets_with_dup(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
@@ -21,4 +21,4 @@ class Solution:
             self._backtrack(cur + [nums[i]], res, nums, i + 1)
 
 
-print(Solution().subsetsWithDup([1, 2, 2]))
+print(Solution().subsets_with_dup([1, 2, 2]))

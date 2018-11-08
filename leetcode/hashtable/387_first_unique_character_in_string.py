@@ -1,5 +1,9 @@
+from collections import OrderedDict
+
+
 class Solution:
-    def first_uniq_char(self, s):
+    @staticmethod
+    def first_uniq_char(s):
         """
         :type s: str
         :rtype: int
@@ -7,18 +11,18 @@ class Solution:
         if not s:
             return -1
 
-        ch_count_map = dict()
-        for (idx, ch) in enumerate(s):
-            if ch in ch_count_map:
-                (idx, count) = ch_count_map[ch]
-                count += 1
-                ch_count_map[ch] = (idx, count)
+        seen = set()
+        ch_idx_map = OrderedDict()
+
+        for (i, ch) in enumerate(s):
+            if ch not in seen:
+                seen.add(ch)
+                ch_idx_map[ch] = i
             else:
-                ch_count_map[ch] = (idx, 1)
+                if ch in ch_idx_map:
+                    ch_idx_map.pop(ch)
 
-        idx_list = []
-        for (ch, (idx, count)) in ch_count_map.items():
-            if count == 1:
-                idx_list.append(idx)
+        return list(ch_idx_map.values())[0] if ch_idx_map else -1
 
-        return min(idx_list) if idx_list else -1
+
+print(Solution().first_uniq_char("leetcode"))

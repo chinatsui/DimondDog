@@ -2,7 +2,7 @@ from leetcode.util.linked_list import ListNode
 
 
 class Solution(object):
-    def isPalindrome(self, head):
+    def is_palindrome(self, head):
         """
         :type head: ListNode
         :rtype: bool
@@ -41,4 +41,4 @@ class Solution(object):
 
 t_head = ListNode(0)
 t_head.next = ListNode(0)
-print(Solution().isPalindrome(t_head))
+print(Solution().is_palindrome(t_head))

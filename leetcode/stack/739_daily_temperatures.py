@@ -1,6 +1,6 @@
 class Solution:
     @staticmethod
-    def dailyTemperatures(T):
+    def daily_temperatures(T):
         """
         :type T: List[int]
         :rtype: List[int]
@@ -15,4 +15,4 @@ class Solution:
         return res
 
 
-print(Solution().dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73]))
+print(Solution().daily_temperatures([73, 74, 75, 71, 69, 72, 76, 73]))

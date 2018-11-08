@@ -1,5 +1,5 @@
 class Solution:
-    def combinationSum(self, candidates, target):
+    def combination_sum(self, candidates, target):
         """
         :type candidates: List[int]
         :type target: int

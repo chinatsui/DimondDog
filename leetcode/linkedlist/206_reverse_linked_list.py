@@ -1,6 +1,6 @@
 class Solution(object):
     @staticmethod
-    def reverseList(head):
+    def reverse_list(head):
         """
         :type head: ListNode
         :rtype: ListNode

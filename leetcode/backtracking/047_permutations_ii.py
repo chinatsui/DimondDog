@@ -14,7 +14,7 @@ Output:
 
 
 class Solution:
-    def permuteUnique(self, nums):
+    def permute_unique(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
@@ -37,4 +37,4 @@ class Solution:
             is_used[i] = False
 
 
-print(Solution().permuteUnique([3, 3, 0, 3]))
+print(Solution().permute_unique([3, 3, 0, 3]))
