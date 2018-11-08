@@ -42,8 +42,3 @@ class BinaryTree:
                 else:
                     data.append(None)
         return data
-
-
-t_root = BinaryTree.deserialize([0, 0, 0, 0, None, None, 1, None, None, None, 2])
-t_data = BinaryTree.serialize(t_root)
-print(t_data)
