@@ -38,27 +38,7 @@ class Solution:
 
     @staticmethod
     def _convert_to_squ_key(i, j):
-        if i in range(0, 3):
-            if j in range(0, 3):
-                return 0
-            elif j in range(3, 6):
-                return 1
-            else:
-                return 2
-        elif i in range(3, 6):
-            if j in range(0, 3):
-                return 3
-            elif j in range(3, 6):
-                return 4
-            else:
-                return 5
-        else:
-            if j in range(0, 3):
-                return 6
-            elif j in range(3, 6):
-                return 7
-            else:
-                return 8
+        return (i // 3) * 3 + j // 3
 
 
 print(Solution().is_valid_sudoku(
