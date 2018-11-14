@@ -72,10 +72,7 @@ class BinaryTree:
         stack = []
         while root:
             stack.append(root)
-            if root.left:
-                root = root.left
-            else:
-                root = root.right
+            root = root.left if root.left else root.right
 
         while stack:
             cur = stack.pop()
@@ -84,10 +81,7 @@ class BinaryTree:
                 cur = stack[-1].right
                 while cur:
                     stack.append(cur)
-                    if cur.left:
-                        cur = cur.left
-                    else:
-                        cur = cur.right
+                    root = root.left if root.left else root.right
         return res
 
     @staticmethod

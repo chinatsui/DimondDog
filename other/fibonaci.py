@@ -7,7 +7,3 @@ class Fibonacci:
             yield a
             a, b = b, a + b
             n -= 1
-
-
-for x in Fibonacci().generate(10):
-    print(x, end=' ')

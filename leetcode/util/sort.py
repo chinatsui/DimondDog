@@ -135,7 +135,7 @@ class HeapSort:
         self._heapify(nums)
         n = len(nums) - 1
         while n:
-            self._swap(nums, 0, n)
+            swap(nums, 0, n)
             n -= 1
             self._sink(nums, 0, n)
 
@@ -155,23 +155,16 @@ class HeapSort:
 
         if l_idx == bound or nums[l_idx] > nums[r_idx]:
             if nums[idx] < nums[l_idx]:
-                self._swap(nums, idx, l_idx)
+                swap(nums, idx, l_idx)
                 self._sink(nums, l_idx, bound)
         elif nums[idx] < nums[r_idx]:
-            self._swap(nums, idx, r_idx)
+            swap(nums, idx, r_idx)
             self._sink(nums, r_idx, bound)
 
-    @staticmethod
-    def _swap(nums, src, dst):
-        tmp = nums[dst]
-        nums[dst] = nums[src]
-        nums[src] = tmp
-
-
-t_nums = [4, 6, 3, 2, 16, 32, 14, 67, 88, 65, 34]
+# t_nums = [4, 6, 3, 2, 16, 32, 14, 67, 88, 65, 34]
 # QuickSort().sort(t_nums)
-MergeSort().sort(t_nums)
+# MergeSort().sort(t_nums)
 # QuickSort2().sort(t_nums)
 # MergeSort2().sort(t_nums)
 # HeapSort().sort(t_nums)
-print(t_nums)
+# print(t_nums)
