@@ -42,7 +42,7 @@ class LinkedList:
             cur = cur.next
         return cur.val
 
-    def addAtHead(self, val):
+    def add_at_head(self, val):
         """
         Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
         :type val: int
@@ -56,7 +56,7 @@ class LinkedList:
             self.head = cur
         self.size += 1
 
-    def addAtTail(self, val):
+    def add_at_tail(self, val):
         """
         Append a node of value val to the last element of the linked list.
         :type val: int
@@ -71,7 +71,7 @@ class LinkedList:
             cur.next = ListNode(val)
         self.size += 1
 
-    def addAtIndex(self, index, val):
+    def add_at_index(self, index, val):
         """
         Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted.
         :type index: int
@@ -82,9 +82,9 @@ class LinkedList:
             return
 
         if index == 0:
-            self.addAtHead(val)
+            self.add_at_head(val)
         elif index == self.size:
-            self.addAtTail(val)
+            self.add_at_tail(val)
         else:
             prev = self.head
             for i in range(1, index):
@@ -94,7 +94,7 @@ class LinkedList:
             prev.next = cur
             self.size += 1
 
-    def deleteAtIndex(self, index):
+    def delete_at_index(self, index):
         """
         Delete the index-th node in the linked list, if the index is valid.
         :type index: int
