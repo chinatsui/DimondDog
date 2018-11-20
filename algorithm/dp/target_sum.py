@@ -56,7 +56,7 @@ class Solution:
 
 class Solution2(object):
     @staticmethod
-    def findTargetSumWays(nums, S):
+    def find_target_sum_ways(nums, S):
         """
         :type nums: List[int]
         :type S: int
@@ -77,4 +77,4 @@ class Solution2(object):
 
 
 print(Solution().find_target_sum_ways([1, 1, 1, 1, 1], 3))
-print(Solution2().findTargetSumWays([1, 1, 1, 1, 1], 3))
+print(Solution2().find_target_sum_ways([1, 1, 1, 1, 1], 3))

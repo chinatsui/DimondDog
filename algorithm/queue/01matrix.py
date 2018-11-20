@@ -44,16 +44,23 @@ class Solution:
                 if 0 <= x < m and 0 <= y < n:
                     yield (x, y)
 
-        q = [((i, j), 0) for i in range(m) for j in range(n) if matrix[i][j] == 0]
-        visited = set([cor for cor, _ in q])
+        q = []
+        visited = set()
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == 0:
+                    q.append((i, j, 0))
+                    visited.add((i, j))
+
         res = [[0] * n for _ in range(m)]
+
         while q:
-            (i, j), distance = q.pop(0)
+            (i, j, distance) = q.pop(0)
             res[i][j] = distance
-            for adj in adjacent(i, j):
-                if adj not in visited:
-                    visited.add(adj)
-                    q.append((adj, distance + 1))
+            for (x, y) in adjacent(i, j):
+                if (x, y) not in visited:
+                    visited.add((x, y))
+                    q.append((x, y, distance + 1))
         return res
 
 
