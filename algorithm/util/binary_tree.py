@@ -34,8 +34,7 @@ class BinaryTree:
         """
         Actually, preorder is a standard DFS
         """
-        res = []
-        stack = [root]
+        res, stack = [], [root]
         while stack:
             node = stack.pop()
             res.append(node.val)
@@ -49,8 +48,7 @@ class BinaryTree:
 
     @staticmethod
     def inorder_traverse(root):
-        res = []
-        stack = []
+        res, stack = [], []
 
         while root:
             stack.append(root)
@@ -63,7 +61,6 @@ class BinaryTree:
             while cur:
                 stack.append(cur)
                 cur = cur.left
-
         return res
 
     @staticmethod

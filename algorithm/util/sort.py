@@ -60,6 +60,7 @@ class MergeSort:
     def sort(self, nums):
         if not nums:
             return
+
         left = 0
         right = len(nums) - 1
         self._sort(nums, left, right)
@@ -132,6 +133,9 @@ class MergeSort2:
 
 class HeapSort:
     def sort(self, nums):
+        if not nums:
+            return
+
         self._heapify(nums)
         n = len(nums) - 1
         while n:
