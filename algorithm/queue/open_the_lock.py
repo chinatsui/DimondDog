@@ -1,7 +1,6 @@
 """
 LeetCode-742
 """
-import time
 
 
 class Solution1:
@@ -67,12 +66,4 @@ class Solution2:
         return -1
 
 
-t_start = time.clock()
-Solution1().open_lock(["2110", "0202", "1222", "2221", "1010"], '2010')
-t_end = time.clock()
-print(t_end - t_start)
-
-t_start = time.clock()
-Solution2().open_lock(["2110", "0202", "1222", "2221", "1010"], '2010')
-t_end = time.clock()
-print(t_end - t_start)
+print(Solution1().open_lock(["2110", "0202", "1222", "2221", "1010"], '2010'))
