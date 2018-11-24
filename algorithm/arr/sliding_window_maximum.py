@@ -23,37 +23,36 @@ You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty a
 Follow up:
 Could you solve it in linear time?
 """
+from collections import deque;
 
 
 class Solution:
     @staticmethod
     def max_sliding_window(nums, k):
         """
-        :type nums: List[int]
-        :type k: int
-        :rtype: List[int]
+        Use a doubly queue to store the idx, each time we do the following things:
+        1) If deq is not empty, do while loop to check if most left idx is out of sliding window, if yes, pop it.
+        2) If deq is not empty, do While loop to check if the number of most right idx < nums[i], if yes, pop it.
+        3) Append i into deque.
+        4) After 1) and 2), add the number of current most left idx in deque to res for the current sliding window.
         """
-        if not nums or k:
+        if not nums or not k:
             return []
 
-        res = []
-        n = len(nums)
-        cache = []
-        for i in range(0, n - k + 1):
-            idx, max_val = i, nums[i]
+        res, deq = [], deque()
+        for i in range(len(nums)):
+            while deq and deq[0] < i - k + 1:
+                deq.popleft()
 
-            if cache:
-                (last_idx, last_max_val) = cache.pop(0)
-                if last_idx >= i:
-                    idx = last_idx
-                    max_val = last_max_val
+            while deq and nums[deq[-1]] < nums[i]:
+                deq.pop()
 
-            for j in range(idx + 1, i + k):
-                if nums[j] > max_val:
-                    idx = j
-                    max_val = nums[j]
-            res.append(max_val)
-            cache.append((idx, max_val))
+            deq.append(i)
+
+            if i >= k - 1:
+                idx = deq[0]
+                res.append(nums[idx])
+
         return res
 
 
