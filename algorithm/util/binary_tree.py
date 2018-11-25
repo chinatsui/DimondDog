@@ -83,7 +83,7 @@ class BinaryTree:
 
     @staticmethod
     def deserialize(data):
-        if not data or not data[0]:
+        if not data or data[0] is None:
             return None
 
         root = TreeNode(data.pop(0))

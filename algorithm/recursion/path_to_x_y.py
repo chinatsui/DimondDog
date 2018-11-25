@@ -2,6 +2,7 @@
 CC150-9.2
 """
 
+
 class Solution:
 
     def get_path(self, matrix):
