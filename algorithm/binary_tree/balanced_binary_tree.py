@@ -32,11 +32,10 @@ Return false.
 
 
 class Solution1:
+    """
+    Top-down is not efficient as there are duplicate dfs.
+    """
     def isBalanced(self, root):
-        """
-        :type root: TreeNode
-        :rtype: bool
-        """
         if not root:
             return True
 
@@ -62,11 +61,10 @@ class Solution1:
 
 
 class Solution2:
+    """
+    Bottom-up is efficient as there is no repetitive dfs.
+    """
     def isBalanced(self, root):
-        """
-        :type root: TreeNode
-        :rtype: bool
-        """
         return True if self._dfs_height(root) != -1 else False
 
     def _dfs_height(self, node):

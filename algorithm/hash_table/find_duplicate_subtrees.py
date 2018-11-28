@@ -32,8 +32,8 @@ from algorithm.util.binary_tree import BinaryTree as bt
 class Solution:
     def find_duplicate_subtrees(self, root):
         """
-        :type root: TreeNode
-        :rtype: List[TreeNode]
+        Use preorder track as key, and node itself as value to store into a map.
+        Note: During preorder traversal, we still need return 'N' for None node.
         """
         track_set = set()
         res_map = dict()

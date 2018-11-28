@@ -28,9 +28,7 @@ class Solution:
 
     def intersect(self, nums1, nums2):
         """
-        :type nums1: List[int]
-        :type nums2: List[int]
-        :rtype: List[int]
+        TODO: The implementation of this problem is not good, use hashMap or two pointers(sort nums1, nums2) instead.
         """
         if not nums1 or not nums2:
             return []

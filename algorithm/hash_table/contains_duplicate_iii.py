@@ -20,36 +20,39 @@ Output: false
 
 
 class Solution:
+    """
+    Hash Table + sliding window.
+    We can understand "difference between nums[i] and nums[j] is at most t" as nums[i] "equals" nums[j] as long as
+    diff between them is less equal than t. How to express it using program? See below:
+            1) nums[i] / (t + 1) == nums[j] / (t + 1)
+            2) nums[i] / (t + 1) == nums[j] / (t + 1) + 1 and abs(nums[i] - nums[j]) < t + 1
+            3) nums[i] / (t + 1) + 1 == nums[j] / (t + 1) and abs(nums[i] - nums[j]) < t + 1
+    So use a cache to store "nums[i] / (t + 1)" -> nums[i] for each time, and check above rule in each sliding window.
+    """
 
     @staticmethod
     def contains_nearby_almost_duplicate(nums, k, t):
-        """
-        :type nums: List[int]
-        :type k: int
-        :type t: int
-        :rtype: bool
-        """
         if t < 0:
             return False
 
-        d = {}
-        w = t + 1
+        cache = {}
+        w = t + 1  # why t + 1, because if t == 0, then 0 cannot be as divisor
         for (i, n) in enumerate(nums):
             m = n // w
 
-            if m in d:
+            if m in cache:
                 return True
 
-            if m - 1 in d and abs(n - d[m - 1]) < w:
+            if m - 1 in cache and abs(n - cache[m - 1]) < w:
                 return True
 
-            if m + 1 in d and abs(n - d[m + 1]) < w:
+            if m + 1 in cache and abs(n - cache[m + 1]) < w:
                 return True
 
-            d[m] = n
+            cache[m] = n
 
             if i >= k:
-                del d[nums[i - k] // w]
+                del cache[nums[i - k] // w]
         return False
 
 

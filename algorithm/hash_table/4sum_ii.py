@@ -27,15 +27,12 @@ from collections import Counter
 
 
 class Solution:
+    """
+    Bi-loop for a in A, b in B to calculate (a + b) and put it into hash map.
+    Then bi-loop c in C, d in D to calculate (-c - d) and search it in previous hash map.
+    """
     @staticmethod
     def four_sum_count(A, B, C, D):
-        """
-        :type A: List[int]
-        :type B: List[int]
-        :type C: List[int]
-        :type D: List[int]
-        :rtype: int
-        """
         ab_count = Counter([a + b for a in A for b in B])
         return sum([ab_count[-c - d] for c in C for d in D])
 

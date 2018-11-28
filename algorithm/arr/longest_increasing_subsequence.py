@@ -12,6 +12,7 @@ There may be more than one LIS combination, it is only necessary for you to retu
 Your algorithm should run in O(n2) complexity.
 Follow up: Could you improve it to O(n log n) time complexity?
 """
+import bisect
 
 
 class Solution:
@@ -33,37 +34,39 @@ class Solution:
     (This is indeed hard to be thought of, but it surely is.)
     """
 
-    def len_of_lis(self, nums):
+    @staticmethod
+    def len_of_lis(nums):
         if not nums:
             return 0
 
         tails = []
         for n in nums:
-            idx = self._binary_search(tails, n)
+            idx = bisect.bisect_left(tails, n)
             if idx == len(tails):
                 tails.append(n)
             else:
                 tails[idx] = n
         return len(tails)
 
-    @staticmethod
-    def _binary_search(tails, n):
-        if not tails:
-            return 0
-
-        lo, hi = 0, len(tails) - 1
-        while lo < hi:
-            mid = (lo + hi) // 2
-            val = tails[mid]
-
-            if val == n:
-                return mid
-            elif val < n:
-                lo = mid + 1
-            else:
-                hi = mid
-
-        return lo if n <= tails[lo] else lo + 1
+    # Self implemented bisect.bisect_left
+    # @staticmethod
+    # def _binary_search(tails, n):
+    #     if not tails:
+    #         return 0
+    #
+    #     lo, hi = 0, len(tails) - 1
+    #     while lo < hi:
+    #         mid = (lo + hi) // 2
+    #         val = tails[mid]
+    #
+    #         if val == n:
+    #             return mid
+    #         elif val < n:
+    #             lo = mid + 1
+    #         else:
+    #             hi = mid
+    #
+    #     return lo if n <= tails[lo] else lo + 1
 
 
 print(Solution().len_of_lis([10, 9, 2, 5, 3, 7, 101, 18]))

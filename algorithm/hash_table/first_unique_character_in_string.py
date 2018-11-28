@@ -18,7 +18,7 @@ from collections import OrderedDict
 
 class Solution:
     @staticmethod
-    def first_uniq_char(s):
+    def first_unique_char(s):
         """
         :type s: str
         :rtype: int
@@ -40,4 +40,4 @@ class Solution:
         return list(ch_idx_map.values())[0] if ch_idx_map else -1
 
 
-print(Solution().first_uniq_char("leetcode"))
+print(Solution().first_unique_char("loveleetcode"))

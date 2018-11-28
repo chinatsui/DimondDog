@@ -23,10 +23,6 @@ The order of your output does not matter.
 class Solution:
     @staticmethod
     def group_anagrams(strs):
-        """
-        :type strs: List[str]
-        :rtype: List[List[str]]
-        """
         if not strs:
             return []
 

@@ -26,8 +26,6 @@ class Solution:
     @staticmethod
     def find_duplicate(nums):
         """
-        :type nums: List[int]
-        :rtype: int
         This solution is based on binary search.
         At first the search space is numbers between 1 to n.
         Each time I select a number mid (which is the one in the middle)

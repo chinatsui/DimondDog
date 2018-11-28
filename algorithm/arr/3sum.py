@@ -29,8 +29,7 @@ class Solution:
     @staticmethod
     def three_sum(nums):
         """
-        :type nums: List[int]
-        :rtype: List[List[int]]
+        To resolve duplicate array problem, sorting it first usually helps more.
         """
         res = []
         nums = sorted(nums)

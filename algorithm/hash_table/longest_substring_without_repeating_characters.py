@@ -24,7 +24,7 @@ Explanation: The answer is "wke", with the length of 3.
 class Solution:
     """
     This problem is a good example to compare with "Longest Increasing Subsequence".
-    This one is requires a contiguous subsequence, but that one doesn't. Think the difference over and over.
+    This one requires a contiguous subsequence, but that one doesn't. Think the difference over and over.
     """
 
     @staticmethod

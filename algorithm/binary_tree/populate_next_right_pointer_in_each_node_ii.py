@@ -35,30 +35,26 @@ After calling your function, the tree should look like:
  / \    \
 4-> 5 -> 7 -> NULL
 """
+from collections import deque
 
 
 class Solution:
     def connect(self, root):
-        if root is None:
+        if not root:
             return
 
-        q = []
+        q = deque()
         cur = (0, root)
         while cur or q:
-            nxt = q.pop(0) if q else None
-            if nxt is None:
-                cur[1].next = None
-            else:
-                if cur[0] == nxt[0]:
-                    cur[1].next = nxt[1]
-                else:
-                    cur[1].next = None
-            self._enqueue_children(cur, q)
-            cur = nxt if nxt else q.pop(0) if q else None
+            nxt = q.popleft() if q else None
+            if nxt and cur[0] == nxt[0]:
+                cur[1].next = nxt[1]
+            self.add_children(q, cur[0], cur[1])
+            cur = nxt if nxt else q.popleft() if q else None
 
-    @staticmethod
-    def _enqueue_children(t, q):
-        if t[1].left:
-            q.append((t[0] + 1, t[1].left))
-        if t[1].right:
-            q.append((t[0] + 1, t[1].right))
+    def add_children(self, q, level, node):
+        if node.left:
+            q.append((level + 1, node.left))
+
+        if node.right:
+            q.append((level + 1, node.right))

@@ -12,7 +12,6 @@ Output: true
 Example 2:
 Input: 14
 Output: false
-
 """
 
 
