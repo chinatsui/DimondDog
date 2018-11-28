@@ -165,10 +165,24 @@ class HeapSort:
             swap(nums, idx, r_idx)
             self._sink(nums, r_idx, bound)
 
+
+class BubbleSort:
+    @staticmethod
+    def sort(nums):
+        if not nums:
+            return
+
+        n = len(nums)
+        for i in range(n - 1):
+            for j in range(n - i - 1):
+                if nums[j] > nums[j + 1]:
+                    nums[j], nums[j + 1] = nums[j + 1], nums[j]
+
 # t_nums = [4, 6, 3, 2, 16, 32, 14, 67, 88, 65, 34]
 # QuickSort().sort(t_nums)
 # MergeSort().sort(t_nums)
 # QuickSort2().sort(t_nums)
 # MergeSort2().sort(t_nums)
 # HeapSort().sort(t_nums)
+# BubbleSort().sort(t_nums)
 # print(t_nums)

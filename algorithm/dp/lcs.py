@@ -36,5 +36,5 @@ class LongestCommonSubSequence:
 
 solution = LongestCommonSubSequence()
 t_seq_a = 'abbbcccdef'
-t_seq_b = 'malnbbcccdxyz'
+t_seq_b = 'balnbbcccdxyz'
 print(solution.count_LCS(t_seq_a, t_seq_b))

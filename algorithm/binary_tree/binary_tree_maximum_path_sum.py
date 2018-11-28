@@ -30,23 +30,24 @@ Output: 42
 
 
 class Solution:
+    """
+    This problem is very similar to LongestUniValuePath.
+    """
+
+    def __init__(self):
+        self.res = float('-inf')
 
     def max_path_sum(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        res = [float('-inf')]
-        self._traverse(root, res)
-        return res[0]
+        self._dfs(root)
+        return self.res
 
-    def _traverse(self, node, res):
+    def _dfs(self, node):
         if not node:
             return 0
 
-        left_sum = max(0, self._traverse(node.left, res))
-        right_sum = max(0, self._traverse(node.right, res))
+        left_val = max(0, self._dfs(node.left))
+        right_val = max(0, self._dfs(node.right))
 
-        tmp = node.val + left_sum + right_sum
-        res[0] = max(tmp, res[0])
-        return max(left_sum, right_sum) + node.val
+        tmp = node.val + left_val + right_val
+        self.res = max(tmp, self.res)
+        return max(left_val, right_val) + node.val

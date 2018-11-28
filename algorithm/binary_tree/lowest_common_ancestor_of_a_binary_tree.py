@@ -54,8 +54,6 @@ class Solution(object):
                 if p_node == q_node:
                     return p_node
 
-        return None
-
     def _dfs(self, node, to_from):
         if node is None:
             return
