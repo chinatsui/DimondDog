@@ -178,6 +178,20 @@ class BubbleSort:
                 if nums[j] > nums[j + 1]:
                     nums[j], nums[j + 1] = nums[j + 1], nums[j]
 
+
+class InsertionSort:
+
+    @staticmethod
+    def sort(nums):
+        if not nums:
+            return
+
+        n = len(nums)
+        for i in range(1, n):
+            for j in range(i - n, -n, -1):
+                if nums[j] < nums[j - 1]:
+                    nums[j], nums[j - 1] = nums[j - 1], nums[j]
+
 # t_nums = [4, 6, 3, 2, 16, 32, 14, 67, 88, 65, 34]
 # QuickSort().sort(t_nums)
 # MergeSort().sort(t_nums)
@@ -185,4 +199,5 @@ class BubbleSort:
 # MergeSort2().sort(t_nums)
 # HeapSort().sort(t_nums)
 # BubbleSort().sort(t_nums)
+# InsertionSort().sort(t_nums)
 # print(t_nums)

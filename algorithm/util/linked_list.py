@@ -111,3 +111,23 @@ class LinkedList:
                 prev = prev.next
             prev.next = prev.next.next
         self.size -= 1
+
+
+class ListNodeUtil:
+
+    @staticmethod
+    def build_linked_list(nums):
+        head = ListNode(0)
+        cur = head
+        for i in nums:
+            cur.next = ListNode(i)
+            cur = cur.next
+        return head.next
+
+    @staticmethod
+    def iterate(head):
+        res = []
+        while head:
+            res.append(head.val)
+            head = head.next
+        return res

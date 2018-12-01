@@ -24,4 +24,4 @@ class Solution:
         return ''.join(s[0:j + 1])
 
 
-print(Solution().remove_blank(' a b s  c d e  asdf'))
+print(Solution().remove_blank('    a b s  c d e  asdf    '))

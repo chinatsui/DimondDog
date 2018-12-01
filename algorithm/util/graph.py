@@ -173,15 +173,15 @@ class DirectedGraphDFSOrder:
     def __init__(self, g):
         self.pre = deque()
         self.post = deque()
-        self.reverse_post = []
+        self.reverse_post = []  # topological order
         self.visited = set()
         for v in g.V():
             if v not in self.visited:
                 self._dfs(g, v)
 
     def _dfs(self, g, v):
-        self.pre.appendleft(v)
         self.visited.add(v)
+        self.pre.appendleft(v)
         for w in g.adj(v):
             if w not in self.visited:
                 self._dfs(g, w)
