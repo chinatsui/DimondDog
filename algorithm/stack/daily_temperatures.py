@@ -16,10 +16,6 @@ Note: The length of temperatures will be in the range [1, 30000]. Each temperatu
 class Solution:
     @staticmethod
     def daily_temperatures(T):
-        """
-        :type T: List[int]
-        :rtype: List[int]
-        """
         res = [0] * len(T)
         stack = []
         for (i, t) in enumerate(T):
