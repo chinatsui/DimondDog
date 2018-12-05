@@ -27,6 +27,9 @@ Your output answer is guaranteed to be fitted in a 32-bit integer.
 
 
 class Solution:
+    """
+    Note, to construct the key in cache, we should considerate "i" and "sum" together.
+    """
     def find_target_sum_ways(self, nums, S):
         """
         :type nums: List[int]

@@ -142,9 +142,7 @@ class PreorderIterator:
 class InorderIterator:
     def __init__(self, root):
         self.stack = []
-        while root:
-            self.stack.append(root)
-            root = root.left
+        self._push_nodes(self.stack, root)
 
     def has_next(self):
         return True if self.stack else False
@@ -152,21 +150,20 @@ class InorderIterator:
     def next(self):
         node = self.stack.pop()
         cur = node.right
-        while cur:
-            self.stack.append(cur)
-            cur = cur.left
+        self._push_nodes(self.stack, cur)
         return node.val
+
+    @staticmethod
+    def _push_nodes(stack, node):
+        while node:
+            stack.append(node)
+            node = node.left
 
 
 class PostorderIterator:
     def __init__(self, root):
         self.stack = []
-        while root:
-            self.stack.append(root)
-            if root.left:
-                root = root.left
-            else:
-                root = root.right
+        self._push_nodes(self.stack, root)
 
     def has_next(self):
         return True if self.stack else False
@@ -176,14 +173,18 @@ class PostorderIterator:
 
         if self.stack and self.stack[-1].left == node:
             cur = self.stack[-1].right
-            while cur:
-                self.stack.append(cur)
-                if cur.left:
-                    cur = cur.left
-                else:
-                    cur = cur.right
+            self._push_nodes(self.stack, cur)
 
         return node.val
+
+    @staticmethod
+    def _push_nodes(stack, node):
+        while node:
+            stack.append(node)
+            if node.left:
+                node = node.left
+            else:
+                node = node.right
 
 
 def test_binary_tree_levelorder_traverse():
