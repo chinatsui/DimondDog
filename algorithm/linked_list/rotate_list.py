@@ -21,55 +21,49 @@ rotate 3 steps to the right: 0->1->2->NULL
 rotate 4 steps to the right: 2->0->1->NULL
 """
 from algorithm.util.linked_list import ListNode
+from algorithm.util.linked_list import ListNodeUtil
 
 
 class Solution(object):
-    def rotate_right(self, head, k):
+
+    @staticmethod
+    def rotate_right(head, k):
         """
         :type head: ListNode
         :type k: int
         :rtype: ListNode
         """
-        if head is None or head.next is None or k == 0:
+        if not head or not head.next or k == 0:
             return head
 
-        cur = head
-        length = 0
+        dummy = ListNode(0)
+        dummy.next = head
+
+        i, cur, tail = 0, head, dummy
         while cur:
-            length += 1
+            tail = cur
             cur = cur.next
+            i += 1
 
-        k %= length
+        j = i - k % i
 
-        if k == 0:
+        if j == i:
             return head
 
-        left = self.reserve(head)
-        right = left
+        prv = dummy
+        cur = head
+        while j > 0:
+            prv = cur
+            cur = cur.next
+            j -= 1
 
-        right_prev = None
-        for i in range(k):
-            right_prev = right
-            right = right.next
-        right_prev.next = None
+        dummy.next = cur
+        tail.next = head
+        prv.next = None
 
-        left = self.reserve(left)
-        right = self.reserve(right)
+        return dummy.next
 
-        right_prev = left
-        while right_prev.next:
-            right_prev = right_prev.next
-        right_prev.next = right
 
-        return left
-
-    @staticmethod
-    def reserve(head):
-        if head:
-            cur = head
-            while cur.next:
-                nxt = cur.next
-                cur.next = nxt.next
-                nxt.next = head
-                head = nxt
-        return head
+t_node = ListNodeUtil.build_linked_list([1, 2])
+res = Solution().rotate_right(t_node, 2)
+print(ListNodeUtil.iterate(res))
