@@ -24,29 +24,24 @@ class Solution:
         :type root: TreeNode
         :rtype: List[int]
         """
-        res = []
-        stack = []
-        while root or stack:
-            while not self.isLeaf(root):
-                stack.append(root)
-                root = root.left
-
-            if root:
-                res.append(root.val)
-
-            while stack and stack[-1].right == root:
-                root = stack.pop()
-                res.append(root.val)
-
-            if stack:
-                root = stack[-1].right
-            else:
-                root = None
-        return res;
+        res, stack = [], []
+        self._push_nodes(stack, root)
+        while stack:
+            node = stack.pop()
+            res.append(node.val)
+            if stack and node == stack[-1].left:
+                node = stack[-1].right
+                self._push_nodes(stack, node)
+        return res
 
     @staticmethod
-    def isLeaf(node):
-        return True if node is None else node.left is None and node.right is None
+    def _push_nodes(stack, node):
+        while node:
+            stack.append(node)
+            if node.left:
+                node = node.left
+            else:
+                node = node.right
 
 
 t_root = bt.deserialize([1, None, 2, 3])

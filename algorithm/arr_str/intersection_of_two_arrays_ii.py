@@ -26,35 +26,26 @@ class Solution:
     In addition to BinarySearch, two pointers are also a good approach for a sorted array.
     """
 
-    def intersect(self, nums1, nums2):
-        """
-        TODO: The implementation of this problem is not good, use hashMap or two pointers(sort nums1, nums2) instead.
-        """
+    @staticmethod
+    def intersect(nums1, nums2):
         if not nums1 or not nums2:
             return []
 
+        nums1 = sorted(nums1)
         nums2 = sorted(nums2)
-        res = []
-        while nums1 and nums2:
-            n = nums1.pop(0)
-            idx = self._binary_search(n, nums2)
-            if idx != -1:
-                res.append(n)
-                nums2.pop(idx)
-        return res
 
-    @staticmethod
-    def _binary_search(n, nums):
-        lo, hi = 0, len(nums) - 1
-        while lo < hi:
-            mid = (lo + hi) // 2
-            if nums[mid] == n:
-                return mid
-            elif nums[mid] < n:
-                lo = mid + 1
+        res = []
+        i, j = 0, 0
+        while i < len(nums1) and j < len(nums2):
+            if nums1[i] == nums2[j]:
+                res.append(nums1[i])
+                i += 1
+                j += 1
+            elif nums1[i] < nums2[j]:
+                i += 1
             else:
-                hi = mid
-        return lo if nums[lo] == n else -1
+                j += 1
+        return res
 
 
 print(Solution().intersect([1, 2, 2, 1], [2, 2]))

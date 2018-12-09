@@ -1,4 +1,6 @@
 """
+LeetCode-468
+
 Write a function to check whether an input string is a valid IPv4 address or IPv6 address or neither.
 
 IPv4 addresses are canonically represented in dot-decimal notation, which consists of four decimal numbers,
@@ -40,84 +42,32 @@ Explanation: This is neither a IPv4 address nor a IPv6 address.
 
 
 class Solution:
+
     def validIPAddress(self, IP):
-        """
-        :type IP: str
-        :rtype: str
-        """
-        if not IP:
-            return False
+        if IP.count(".") == 3 and all(self.isIPv4(seg) for seg in IP.split(".")):
+            return "IPv4"
 
-        is_v4 = None
-        i, j = 0, 0
-        while j < len(IP):
-            if IP[j] == '.':
-                is_v4 = True
-                j = 0
-                break;
-            elif IP[j] == ':':
-                is_v4 = False
-                j = 0
-                break;
-            j += 1
+        if IP.count(":") == 7 and all(self.isIPv6(seg) for seg in IP.split(":")):
+            return "IPv6"
 
-        valid = True
-        while j < len(IP):
-            if IP[j] == '.' and not is_v4:
-                valid = False
-                break
-            elif IP[j] == ':' and is_v4:
-                valid = False
-                break
-            elif IP[j] == '.' and is_v4:
-                valid = self._check_ip_v4(IP, i, j)
-                if not valid:
-                    break
-                else:
-                    i = j + 1
-            elif IP[j] == ':' and not is_v4:
-                valid = self._check_ip_v6(IP, i, j)
-                if not valid:
-                    break
-                else:
-                    i = j + 1
-            j += 1
-
-        if valid and is_v4:
-            return 'IPv4'
-
-        if valid and not is_v4:
-            return 'IPv6'
-
-        return 'Neither'
+        return "Neither"
 
     @staticmethod
-    def _check_ip_v4(s, i, j):
-        seg = s[i:j]
-        if seg[0] == '0':
+    def isIPv4(s):
+        try:
+            return str(int(s)) == s and 0 <= int(s) <= 255
+        except ValueError:
             return False
-
-        for ch in seg:
-            if ch < '0':
-                return False
-            elif ch > '9':
-                return False
-
-        return True
 
     @staticmethod
-    def _check_ip_v6(s, i, j):
-        seg = s[i:j]
-        if seg[0] == '0':
+    def isIPv6(s):
+        if len(s) > 4:
             return False
 
-        for ch in seg:
-            if ch < '0':
-                return False
-            elif ch > 'f':
-                return False
-
-        return True
+        try:
+            return int(s, 16) >= 0 and s[0] != '-'
+        except ValueError:
+            return False
 
 
-print(Solution().validIPAddress('172.16.254.1'))
+print(Solution().validIPAddress('2001:0db8:85a3:0:0:8A2E:0370:7334'))

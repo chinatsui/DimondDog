@@ -35,26 +35,46 @@ After calling your function, the tree should look like:
  / \    \
 4-> 5 -> 7 -> NULL
 """
-from collections import deque
 
 
 class Solution:
-    def connect(self, root):
-        if not root:
-            return
+    """
+    In contrast to LeetCode-116, we need to additionally maintain a child_cur for link operation.
+    Besides, it is a bit more complicated to find the next head, think it over for all kinds of cases.
+    """
 
-        q = deque()
-        cur = (0, root)
-        while cur or q:
-            nxt = q.popleft() if q else None
-            if nxt and cur[0] == nxt[0]:
-                cur[1].next = nxt[1]
-            self.add_children(q, cur[0], cur[1])
-            cur = nxt if nxt else q.popleft() if q else None
+    @staticmethod
+    def connect(root):
+        head = root
+        while head:
+            cur = head
+            child_cur = None
 
-    def add_children(self, q, level, node):
-        if node.left:
-            q.append((level + 1, node.left))
+            if head.left:
+                head = head.left
+            else:
+                head = head.right
 
-        if node.right:
-            q.append((level + 1, node.right))
+            while cur:
+                if cur.left:
+                    child_cur = cur.left
+                    if cur.right:
+                        child_cur.next = cur.right
+                        child_cur = child_cur.next
+                elif cur.right:
+                    child_cur = cur.right
+
+                if cur.next:
+                    if child_cur:
+                        if cur.next.left:
+                            child_cur.next = cur.next.left
+                            child_cur = child_cur.next
+                        elif cur.next.right:
+                            child_cur.next = cur.next.right
+                            child_cur = child_cur.next
+                cur = cur.next
+                if not head and cur:
+                    if cur.left:
+                        head = cur.left
+                    else:
+                        head = cur.right

@@ -73,10 +73,11 @@ class Solution:
             else:
                 hi = mid
 
-        if lo == len(letters) - 1:
-            if letters[lo] <= target:
-                return letters[0]
-            else:
-                return letters[lo]
+        #  If we didn't find the target in above while loop, then just make sure if lo is the last index and compare
+        #  nums[lo] and target to see if the position of insertion is "lo" or "lo + 1".
+        #  When letters[lo] < target, then position is lo + 1,
+        #  so return letters[0] according to the problem requirements. Otherwise returns letters[lo]
+        if lo == len(letters) - 1 and letters[lo] <= target:
+            return letters[0]
 
         return letters[lo]

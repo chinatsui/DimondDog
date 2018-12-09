@@ -30,10 +30,12 @@ class Solution:
         if left == 0 and right == 0:
             res.append(cur)
             return
+
         if left > 0:
             self._backtrack(cur + '(', res, left - 1, right)
+
         if right > left:
             self._backtrack(cur + ')', res, left, right - 1)
 
 
-print(Solution().generate_parentheses(5))
+print(Solution().generate_parentheses(3))

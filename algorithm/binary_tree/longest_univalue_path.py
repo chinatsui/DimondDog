@@ -38,7 +38,7 @@ class Solution:
     def __init__(self):
         self.res = 0
 
-    def longestUniValuePath(self, root):
+    def longest_uni_value_path(self, root):
         self.dfs(root)
         return self.res
 
@@ -65,4 +65,4 @@ class Solution:
 
 
 t_root = bt.deserialize([1, 4, 5, 4, 4, None, 5])
-print(Solution().longestUniValuePath(t_root))
+print(Solution().longest_uni_value_path(t_root))

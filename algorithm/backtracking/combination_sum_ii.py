@@ -1,36 +1,35 @@
 """
-LeetCode-39
-
-Given a set of candidate numbers (candidates) (without duplicates) and a target number (target),
+Given a collection of candidate numbers (candidates) and a target number (target),
 find all unique combinations in candidates where the candidate numbers sums to target.
 
-The same repeated number may be chosen from candidates unlimited number of times.
+Each number in candidates may only be used once in the combination.
 
 Note:
 All numbers (including target) will be positive integers.
 The solution set must not contain duplicate combinations.
 
 Example 1:
-Input: candidates = [2,3,6,7], target = 7,
+Input: candidates = [10,1,2,7,6,1,5], target = 8,
 A solution set is:
 [
-  [7],
-  [2,2,3]
+  [1, 7],
+  [1, 2, 5],
+  [2, 6],
+  [1, 1, 6]
 ]
 
 Example 2:
-Input: candidates = [2,3,5], target = 8,
+Input: candidates = [2,5,2,1,2], target = 5,
 A solution set is:
 [
-  [2,2,2,2],
-  [2,3,3],
-  [3,5]
+  [1,2,2],
+  [5]
 ]
 """
 
 
 class Solution:
-    def combination_sum(self, candidates, target):
+    def combinationSum2(self, candidates, target):
         """
         :type candidates: List[int]
         :type target: int
@@ -40,10 +39,11 @@ class Solution:
             return []
 
         res = []
-        self._backtrack(candidates, target, 0, [], res)
+        candidates = sorted(candidates)
+        self.backtrack(candidates, target, 0, [], res)
         return res
 
-    def _backtrack(self, candidates, target, i, cur, res):
+    def backtrack(self, candidates, target, i, cur, res):
         if target == 0:
             res.append(cur)
         elif target < 0:
@@ -54,4 +54,4 @@ class Solution:
                 if j > i and candidates[j] == candidates[j - 1]:
                     continue
                 val = candidates[j]
-                self._backtrack(candidates, target - val, j, cur + [val], res)
+                self.backtrack(candidates, target - val, j + 1, cur + [val], res)

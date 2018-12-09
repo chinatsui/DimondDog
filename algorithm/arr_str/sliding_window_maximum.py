@@ -23,7 +23,7 @@ You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty a
 Follow up:
 Could you solve it in linear time?
 """
-from collections import deque;
+from collections import deque
 
 
 class Solution:
