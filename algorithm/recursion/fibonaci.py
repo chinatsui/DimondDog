@@ -1,9 +1,14 @@
 class Fibonacci:
+    def generate(self, n, a=1, b=1):
+        if n <= 2:
+            return b
+        else:
+            return self.generate(n - 1, b, a + b)
 
     @staticmethod
-    def generate(n):
+    def iterator(n):
         a, b = 1, 1
         while n > 0:
             yield a
-            a, b = b, a + b
             n -= 1
+            a, b = b, a + b
