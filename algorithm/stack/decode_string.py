@@ -35,8 +35,8 @@ class Solution:
         while encode:
             encode_ch = encode.pop()
             if encode_ch == '[':
-                digit_str = ''
                 digit_ch = encode.pop()
+                digit_str = ''
                 while encode and digit_ch.isdigit():
                     digit_str = digit_ch + digit_str
                     digit_ch = encode.pop()

@@ -45,24 +45,26 @@ class Solution:
                     count += 1
                     q = [(i, j)]
                     while q:
-                        (x, y) = q.pop(0)
+                        # (x, y) = q.pop(0)
+                        tmp = []
+                        for (x, y) in q:
+                            if x < 0 or x == m or y < 0 or y == n:
+                                continue
 
-                        if x < 0 or x == m or y < 0 or y == n:
-                            continue
+                            if (x, y) in visited:
+                                continue
 
-                        if (x, y) in visited:
-                            continue
+                            if grid[x][y] == '0':
+                                continue
 
-                        if grid[x][y] == '0':
-                            continue
+                            grid[x][y] = '0'
 
-                        grid[x][y] = '0'
-
-                        visited.add((x, y))
-                        q.append((x + 1, y))
-                        q.append((x - 1, y))
-                        q.append((x, y + 1))
-                        q.append((x, y - 1))
+                            visited.add((x, y))
+                            tmp.append((x + 1, y))
+                            tmp.append((x - 1, y))
+                            tmp.append((x, y + 1))
+                            tmp.append((x, y - 1))
+                        q = tmp
         return count
 
 

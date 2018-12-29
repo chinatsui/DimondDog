@@ -49,6 +49,26 @@ class Solution:
         return res
 
 
+class Solution1:
+
+    @staticmethod
+    def traverse(root):
+        res = []
+        q = [root]
+        while q:
+            tmp = []
+            cur = []
+            for node in q:
+                cur.append(node.val)
+                if node.left:
+                    tmp.append(node.left)
+                if node.right:
+                    tmp.append(node.right)
+            res.append(cur)
+            q = tmp
+        return res
+
+
 t_root = bt.deserialize([3, 9, 20, None, None, 15, 7])
-t_res = Solution.level_order_traversal(t_root)
+t_res = Solution1.traverse(t_root)
 print(t_res)

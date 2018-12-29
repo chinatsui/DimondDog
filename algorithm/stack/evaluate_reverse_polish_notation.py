@@ -60,7 +60,6 @@ class Solution:
                     num1 = abs(num1)
                     divide_res = num2 // num1
                     stack.append(divide_res if not negative else -divide_res)
-
             else:
                 stack.append(int(x))
         return stack.pop()

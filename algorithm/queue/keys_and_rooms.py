@@ -41,19 +41,22 @@ class Solution:
         :type rooms: List[List[int]]
         :rtype: bool
         """
-        can_visited = [False] * len(rooms)
+        visited = [False] * len(rooms)
 
         seen = set()
         q = [0]
         while q:
-            n = q.pop(0)
-            can_visited[n] = True
-            for key in rooms[n]:
-                if (n, key) not in seen:
-                    seen.add((n, key))
-                    q.append(key)
+            tmp = []
+            for cur in q:
+                visited[cur] = True
+                for key in rooms[cur]:
+                    if (cur, key) not in seen:
+                        seen.add((cur, key))
+                        tmp.append(key)
+            q = tmp
 
-        for can in can_visited:
-            if not can:
+        for v in visited:
+            if not v:
                 return False
+
         return True

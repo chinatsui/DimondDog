@@ -61,7 +61,6 @@ class Solution:
 
         visited.add(origin)
         for n in origin.neighbors:
-            copy_neighbor = None
             if n in mapping:
                 copy_neighbor = mapping[n]
             else:

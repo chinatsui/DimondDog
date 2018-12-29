@@ -55,12 +55,15 @@ class Solution:
         res = [[0] * n for _ in range(m)]
 
         while q:
-            (i, j, distance) = q.pop(0)
-            res[i][j] = distance
-            for (x, y) in adjacent(i, j):
-                if (x, y) not in visited:
-                    visited.add((x, y))
-                    q.append((x, y, distance + 1))
+            # (i, j, distance) = q.pop(0)
+            tmp = []
+            for (i, j, distance) in q:
+                res[i][j] = distance
+                for (x, y) in adjacent(i, j):
+                    if (x, y) not in visited:
+                        visited.add((x, y))
+                        tmp.append((x, y, distance + 1))
+            q = tmp
         return res
 
 

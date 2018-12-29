@@ -12,7 +12,6 @@ Note:
 
 Although the above answer is in lexicographical order, your answer could be in any order you want.
 """
-from collections import deque
 
 
 class Solution:
@@ -35,7 +34,7 @@ class Solution:
         num_map['8'] = 'tuv'
         num_map['9'] = 'wxyz'
 
-        res = deque()
+        res = []
         for num in digits:
             if '2' <= num <= '9':
                 chars = num_map[num]
@@ -45,9 +44,8 @@ class Solution:
                         res.append(ch)
                     continue
 
-                tmp = deque()
-                while res:
-                    cur = res.popleft()
+                tmp = []
+                for cur in res:
                     for ch in chars:
                         tmp.append(cur + ch)
                 res = tmp

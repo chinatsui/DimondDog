@@ -13,8 +13,6 @@ return 2.
 Note: You may assume the string contain only lowercase letters.
 """
 
-from collections import OrderedDict
-
 
 class Solution:
     @staticmethod
@@ -26,16 +24,13 @@ class Solution:
         if not s:
             return -1
 
-        seen = set()
-        ch_idx_map = OrderedDict()
+        ch_idx_map = dict()
 
         for (i, ch) in enumerate(s):
-            if ch not in seen:
-                seen.add(ch)
+            if ch not in ch_idx_map:
                 ch_idx_map[ch] = i
             else:
-                if ch in ch_idx_map:
-                    ch_idx_map.pop(ch)
+                del ch_idx_map[ch]
 
         return list(ch_idx_map.values())[0] if ch_idx_map else -1
 
