@@ -28,6 +28,10 @@ P     I
 
 
 class Solution:
+    """
+    A very good problem can help think of how to write loops in the nested or parallel layout.
+    """
+
     @staticmethod
     def convert(s, numRows):
         if numRows <= 1:
