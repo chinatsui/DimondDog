@@ -49,6 +49,10 @@ Output: false
 
 
 class Solution:
+    """
+    In contrast to LeetCode-10, the '*' stands for any sequence not the `zero or more precedent element`.
+    Think this over and over during the programming.
+    """
     @staticmethod
     def is_match(s, p):
         if s is None or p is None:
@@ -68,7 +72,7 @@ class Solution:
             for j in range(1, n + 1):
                 if p[j - 1] == '*':
                     dp[i][j] = dp[i - 1][j] or dp[i][j - 1]
-                elif p[j - 1] == s[i - 1] or p[j - 1] == '?':
-                    dp[i][j] = dp[i - 1][j - 1]
+                else:
+                    dp[i][j] = dp[i - 1][j - 1] and (s[i - 1] == p[j - 1] or p[j - 1] == '?')
 
         return dp[m][n]

@@ -63,52 +63,32 @@ class Solution:
 
     @staticmethod
     def is_match(s, p):
-        if not s or not p:
-            return False
-        # The DP dp and the string s and p use the same indexes i and j, but
-        # dp[i][j] means the match status between p[:i] and s[:j], i.e.
-        # dp[0][0] means the match status of two empty strings, and
-        # dp[1][1] means the match status of p[0] and s[0]. Therefore, when
-        # referring to the i-th and the j-th characters of p and s for updating
-        # dp[i][j], we use p[i - 1] and s[j - 1].
+        m, n = len(s), len(p)
 
-        # Initialize the dp with False. The first row is satisfied.
-        dp = [[False] * (len(s) + 1) for _ in range(len(p) + 1)]
-
-        # Update the corner case of matching two empty strings.
+        dp = [[False] * (n + 1) for _ in range(m + 1)]
         dp[0][0] = True
 
-        # Update the corner case of when s is an empty string but p is not.
-        # Since each '*' can eliminate the charter before it, the dp is
-        # vertically updated by the one before previous. [test_symbol_0]
-        for i in range(2, len(p) + 1):
-            dp[i][0] = dp[i - 2][0] and p[i - 1] == '*'
+        for j in range(2, n + 1):
+            dp[0][j] = dp[0][j - 2] and p[j - 1] == '*'
 
-        for i in range(1, len(p) + 1):
-            for j in range(1, len(s) + 1):
-                if p[i - 1] != "*":
-                    # Update the dp by referring the diagonal element.
-                    dp[i][j] = dp[i - 1][j - 1] and \
-                               (p[i - 1] == s[j - 1] or p[i - 1] == '.')
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if p[j - 1] != '*':
+                    dp[i][j] = dp[i - 1][j - 1] and (p[j - 1] == s[i - 1] or p[j - 1] == '.')
                 else:
-                    # Eliminations (referring to the vertical element)
-                    # Either refer to the one before previous or the previous.
-                    # I.e. * eliminate the previous or count the previous.
-                    # [test_symbol_1]
-                    dp[i][j] = dp[i - 2][j] or dp[i - 1][j]
+                    # a* counts as empty or single a
+                    dp[i][j] = dp[i][j - 2] or dp[i][j - 1]
 
-                    # Propagation (referring to the horizontal element)
-                    # If p's previous one is equal to the current s, with
-                    # helps of *, the status can be propagated from the left.
-                    # [test_symbol_2]
-                    if p[i - 2] == s[j - 1] or p[i - 2] == '.':
-                        dp[i][j] |= dp[i][j - 1]
+                    if p[j - 2] == s[i - 1] or p[j - 2] == '.':
+                        # a* counts as multiple a
+                        dp[i][j] |= dp[i - 1][j]
 
-        return dp[-1][-1]
+        return dp[m][n]
 
 
-print(Solution().is_match('aa', 'a'))
-print(Solution().is_match('aa', 'a*'))
-print(Solution().is_match('ab', '.*'))
-print(Solution().is_match('aab', 'c*a*b'))
-print(Solution().is_match('mississippi', 'mis*is*p*.'))
+print(Solution().is_match('aa', '*'))
+# print(Solution().is_match('aa', 'a'))
+# print(Solution().is_match('aa', 'a*'))
+# print(Solution().is_match('ab', '.*'))
+# print(Solution().is_match('aab', 'c*a*b'))
+# print(Solution().is_match('mississippi', 'mis*is*p*.'))
