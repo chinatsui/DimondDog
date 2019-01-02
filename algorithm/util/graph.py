@@ -6,7 +6,6 @@ from collections import deque
 
 
 class Graph:
-
     def __init__(self, v):
         self.V = v
         self.E = 0
@@ -34,7 +33,6 @@ class Graph:
 
 
 class GraphDfsPath:
-
     def __init__(self, g, s):
         self.s = s
         self.visited = set()
@@ -61,7 +59,6 @@ class GraphDfsPath:
 
 
 class GraphBfsPath:
-
     def __init__(self, g, s):
         self.s = s
         self.visited = set()
@@ -69,15 +66,16 @@ class GraphBfsPath:
         self.bfs(g, s)
 
     def _bfs(self, g, v):
-        q = deque()
-        q.append(v)
+        q = [v]
         while q:
-            v = q.popleft()
-            self.visited.add(v)
-            for w in g.adj(v):
-                if w not in self.visited:
-                    self.edge_to[w] = v
-                    q.append(w)
+            tmp = []
+            for v in q:
+                self.visited.add(v)
+                for w in g.adj(v):
+                    if w not in self.visited:
+                        self.edge_to[w] = v
+                        tmp.append(w)
+            q = tmp
 
     def has_path_to(self, v):
         return v in self.visited
@@ -92,7 +90,6 @@ class GraphBfsPath:
 
 
 class ConnectedComponent:
-
     def __init__(self, g):
         self.visited = set()
         self.ids = [0] * g.V()
@@ -120,7 +117,6 @@ class ConnectedComponent:
 
 
 class DirectedGraph(Graph):
-
     def add(self, v, w):
         if w in self.adj(v):
             return
@@ -137,7 +133,6 @@ class DirectedGraph(Graph):
 
 
 class DirectedGraphCycleCheck:
-
     def __init__(self, g):
         self.visited = set()
         self.on_stack = set()
@@ -169,7 +164,6 @@ class DirectedGraphCycleCheck:
 
 
 class DirectedGraphDFSOrder:
-
     def __init__(self, g):
         self.pre = deque()
         self.post = deque()
@@ -199,7 +193,6 @@ class DirectedGraphDFSOrder:
 
 
 class TopologicalSort:
-
     def __init__(self, g):
         self.order = None
         self.cycle_check = DirectedGraphCycleCheck(g)
