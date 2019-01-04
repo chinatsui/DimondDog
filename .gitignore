@@ -1,5 +1,6 @@
 *.iml
 .idea/
+.vscode/
 tmp.*
 leetcode/util/__pycache__/
 venv/
