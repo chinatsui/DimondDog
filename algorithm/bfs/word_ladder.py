@@ -48,16 +48,15 @@ class Solution:
 
         while queue:
             word, dist = queue.popleft()
-
-            if word == endWord:
-                return dist
-
             for i in range(len(word)):
                 for j in 'abcdefghijklmnopqrstuvwxyz':
                     tmp = word[:i] + j + word[i+1:]
                     if tmp not in visited and tmp in wordSet:
-                        queue.append((tmp, dist+1))
-                        visited.add(tmp)
+                        if tmp == endWord:
+                            return dist + 1
+                        else:
+                            queue.append((tmp, dist+1))
+                            visited.add(tmp)
         return 0
 
 

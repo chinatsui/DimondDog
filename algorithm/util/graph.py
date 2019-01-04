@@ -54,14 +54,16 @@ class GraphBfsPath:
         self._bfs(g, s)
 
     def _bfs(self, g, v):
-        q = deque([v])
+        q = deque()
+        q.append(v)
+        self.visited.add(v)
         while q:
             v = q.popleft()
-            self.visited.add(v)
             for w in g.adj[v]:
                 if w not in self.visited:
                     self.edge_to[w] = v
                     q.append(w)
+                    self.visited.add(w)
 
     def has_path_to(self, v):
         return v in self.visited

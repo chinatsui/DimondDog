@@ -1,6 +1,7 @@
 """
 LeetCode-742
 """
+from collections import deque
 
 
 class Solution1:
@@ -8,24 +9,32 @@ class Solution1:
         """
         Usually BFS is a good way to find the shortest path to the goal.
         """
+        if '0000' in deadends:
+            return -1
+            
         visited = set(deadends)
-
+        
         start = '0000'
-        q = [(start, 0)]
+        q = deque()
+        q.append((start, 1))
+        visited.add(start)
         while q:
-            (cur, steps) = q.pop(0)
-
-            if cur in visited:
-                continue
-
-            if cur == target:
-                return steps
-
-            visited.add(cur)
+            (cur, steps) = q.popleft()
             for i in range(0, 4):
-                q.append((self._move_up(cur, i), steps + 1))
-                q.append((self._move_down(cur, i), steps + 1))
+                up = self._move_up(cur, i)
+                down = self._move_down(cur, i)
 
+                if up not in visited:
+                    if up == target:
+                        return steps
+                    q.append((up, steps + 1))
+                    visited.add(up)
+
+                if down not in visited:
+                    if down == target:
+                        return steps
+                    q.append((down, steps + 1))
+                    visited.add(down)
         return -1
 
     @staticmethod
