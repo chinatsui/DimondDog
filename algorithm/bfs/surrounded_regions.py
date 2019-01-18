@@ -23,7 +23,7 @@ Two cells are connected if they are adjacent cells connected horizontally or ver
 from collections import deque
 
 
-class Solution:
+class BFSSolution:
     def solve(self, board):
         """
         :type board: List[List[str]]
@@ -40,7 +40,7 @@ class Solution:
         m, n = len(board), len(board[0])
         visited = set()
         trace = set()
-        
+
         for i in range(m):
             for j in range(n):
                 if (i, j) not in visited and board[i][j] == 'O':
@@ -49,10 +49,11 @@ class Solution:
 
                     if i == 0 or i == m - 1 or j == 0 or j == n - 1:
                         surrounded = False
+
                     q.append((i, j))
                     visited.add((i, j))
                     trace.add((i, j))
-                    
+
                     while q:
                         x, y = q.popleft()
                         board[x][y] = 'X'
@@ -69,20 +70,55 @@ class Solution:
                     if not surrounded:
                         for (x, y) in trace:
                             board[x][y] = 'O'
-                            
+
                     trace.clear()
 
 
-t_board = [
-    ["O","X","O","O","O","O","O","O","O"],
-    ["O","O","O","X","O","O","O","O","X"],
-    ["O","X","O","X","O","O","O","O","X"],
-    ["O","O","O","O","X","O","O","O","O"],
-    ["X","O","O","O","O","O","O","O","X"],
-    ["X","X","O","O","X","O","X","O","X"],
-    ["O","O","O","X","O","O","O","O","O"],
-    ["O","O","O","X","O","O","O","O","O"],
-    ["O","O","O","O","O","X","X","O","O"]]
+class DFSSolution:
+    def solve(self, board):
+        if not board or not board[0]:
+            return
 
-Solution().solve(t_board)
+        m, n = len(board), len(board[0])
+        visited = set()
+        for i in range(m):
+            for j in range(n):
+                if (i, j) not in visited and board[i][j] == 'O':
+                    if (i == 0 or i == m - 1 or n == 0 or n == n - 1):
+                        self._dfs(board, i, j, visited, 'U')
+                    else:
+                        self._dfs(board, i, j, visited, 'X')
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'U':
+                    board[i][j] = 'O'
+
+    def _dfs(self, board, x, y, visited, mark):
+        board[x][y] = mark
+        visited.add((x, y))
+
+        for (nx, ny) in self.adjacent(board, x, y):
+            if (nx, ny) not in visited and board[nx][ny] == 'O':
+                self._dfs(board, nx, ny, visited, mark)
+
+    @staticmethod
+    def adjacent(board, i, j):
+        for (x, y) in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]:
+            if 0 <= x < len(board) and 0 <= y < len(board[0]):
+                yield (x, y)
+
+
+t_board = [
+    ["O", "X", "O", "O", "O", "O", "O", "O", "O"],
+    ["O", "O", "O", "X", "O", "O", "O", "O", "X"],
+    ["O", "X", "O", "X", "O", "O", "O", "O", "X"],
+    ["O", "O", "O", "O", "X", "O", "O", "O", "O"],
+    ["X", "O", "O", "O", "O", "O", "O", "O", "X"],
+    ["X", "X", "O", "O", "X", "O", "X", "O", "X"],
+    ["O", "O", "O", "X", "O", "O", "O", "O", "O"],
+    ["O", "O", "O", "X", "O", "O", "O", "O", "O"],
+    ["O", "O", "O", "O", "O", "X", "X", "O", "O"]]
+
+DFSSolution().solve(t_board)
 print(t_board)
