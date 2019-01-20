@@ -44,6 +44,7 @@ class Solution:
     Think the answer over and over.
     Besides, this problem is a very good example to recurse and change a tree in-place.
     """
+
     def flatten(self, root):
         """
         :type root: TreeNode
