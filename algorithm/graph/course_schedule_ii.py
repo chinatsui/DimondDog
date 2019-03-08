@@ -1,4 +1,6 @@
 """
+LeetCode - 210
+
 There are a total of n courses you have to take, labeled from 0 to n-1.
 
 Some courses may have prerequisites, for example to take course 0 you have to first take course 1,
@@ -32,16 +34,16 @@ You may assume that there are no duplicate edges in the input prerequisites.
 
 class Solution:
     @staticmethod
-    def find_order(numCourses, prerequisites):
+    def find_order(num_courses, prerequisites):
         """
-        :type numCourses: int
+        :type num_courses: int
         :type prerequisites: List[List[int]]
         :rtype: List[int]
         """
-        if not numCourses:
+        if not num_courses:
             return []
 
-        dg = DirectedGraph(numCourses)
+        dg = DirectedGraph(num_courses)
         dg_dfs_order = DirectedGraphDFSOrder(dg)
 
         for pair in prerequisites:
@@ -91,10 +93,10 @@ class DirectedGraph:
 
     def __init__(self, n):
         self.cnt = n
-        self.adjacents = [set() for _ in range(n)]
+        self.adjacent = [set() for _ in range(n)]
 
     def add(self, v, w):
-        adj_set = self.adjacents[v]
+        adj_set = self.adjacent[v]
         if w not in adj_set:
             adj_set.add(w)
 
