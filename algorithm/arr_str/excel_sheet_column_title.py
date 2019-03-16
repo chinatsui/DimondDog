@@ -1,5 +1,5 @@
 """
-LeetCode - 168
+LeetCode-168
 
 Given a positive integer, return its corresponding column title as appear in an Excel sheet.
 

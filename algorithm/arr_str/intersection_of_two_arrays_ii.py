@@ -1,5 +1,6 @@
 """
 LeetCode-350
+
 Given two arrays, write a function to compute their intersection.
 
 Example 1:
