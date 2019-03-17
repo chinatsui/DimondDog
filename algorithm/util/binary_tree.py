@@ -117,6 +117,12 @@ class BinaryTree:
                 queue.append(cur.right)
             else:
                 res.append(None)
+
+        for i in range(len(res) - 1, -1, -1):
+            if res[i] is not None:
+                res = res[:i + 1]
+                break
+                
         return res
 
 
