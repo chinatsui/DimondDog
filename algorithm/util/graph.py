@@ -130,14 +130,18 @@ class DirectedGraphCycleCheck:
         for w in g.adj[v]:
             if self.has_cycle():
                 return
+
             if w not in self.visited:
                 self.edge_to[w] = v
                 self._dfs(g, w)
             elif w in self.on_stack:
-                self.cycle = [v]
-                while v != w:
-                    k = self.edge_to[v]
+                self.cycle = [w]
+                k = v
+                while k != w:
                     self.cycle.append(k)
+                    k = self.edge_to[v]
+                self.cycle.append(w)
+                return
         self.on_stack.remove(v)
 
     def has_cycle(self):

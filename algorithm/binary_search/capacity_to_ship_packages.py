@@ -1,4 +1,6 @@
 """
+LeetCode-1014
+
 A conveyor belt has packages that must be shipped from one port to another within D days.
 
 The i-th package on the conveyor belt has a weight of weights[i].
@@ -69,3 +71,6 @@ class Solution(object):
                     return False
                 vol = w
         return True
+
+
+print(Solution().ship_with_days([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5))
