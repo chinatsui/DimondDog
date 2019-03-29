@@ -123,6 +123,9 @@ class DirectedGraphCycleCheck:
         self.on_stack = set()
         self.cycle = None
         self.edge_to = [i for i in range(g.V)]
+        for v in g.V:
+            if v not in self.visited:
+                self._dfs(g, v)
 
     def _dfs(self, g, v):
         self.visited.add(v)
