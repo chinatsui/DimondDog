@@ -6,13 +6,28 @@ class Node:
     def __init__(self, parent=None, position=None):
         self.parent = parent
         self.position = position
-
         self.g = 0
         self.h = 0
         self.f = 0
 
     def __eq__(self, other):
         return self.position == other.position
+
+
+def pop_next(open_list):
+    """
+    TODO: Should be optimized by priority queue
+    """
+    min_node = None
+    for (position, node) in open_list.items():
+        if not min_node or min_node.f < node.f:
+            min_node = node
+    open_list.pop(min_node.position)
+    return min_node
+
+
+def distance(src, dst):
+    return abs(dst[0] - src[0]) ** 2 + abs(dst[1] - src[1]) ** 2
 
 
 def a_star(maze, start, end):
@@ -27,81 +42,55 @@ def a_star(maze, start, end):
     end_node.g = end_node.h = end_node.f = 0
 
     # Initialize both open and closed list
-    open_list = []
-    closed_list = []
+    open_dict = dict()
+    closed_set = set()
 
     # Add the start node
-    open_list.append(start_node)
+    open_dict[start] = start_node
 
     # Loop until you find the end
-    while len(open_list) > 0:
+    while open_dict:
 
         # Get the current node
-        current_node = open_list[0]
-        current_index = 0
-        for index, item in enumerate(open_list):
-            if item.f < current_node.f:
-                current_node = item
-                current_index = index
+        current_node = pop_next(open_dict)
 
-        # Pop current off open list, add to closed list
-        open_list.pop(current_index)
-        closed_list.append(current_node)
+        # Add to closed list
+        closed_set.add(current_node.position)
 
         # Found the goal
         if current_node == end_node:
             path = []
-            current = current_node
-            while current is not None:
-                path.append(current.position)
-                current = current.parent
+            node = current_node
+            while node:
+                path.append(node.position)
+                node = node.parent
             return path[::-1]  # Return reversed path
 
+        def adjacent(position):
+            i, j = position[0], position[1]
+            m, n = len(maze), len(maze[0])
+            for (x, y) in ((i - 1, j - 1), (i, j - 1), (i + 1, j - 1), (i + 1, j),
+                           (i + 1, j + 1), (i, j + 1), (i - 1, j + 1), (i - 1, j)):
+                if 0 <= x < m and 0 <= y < n:
+                    yield (x, y)
+
         # Generate children
-        children = []
-        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1)]:  # Adjacent squares
-
-            # Get node position
-            node_position = (current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
-
-            # Make sure within range
-            if node_position[0] > (len(maze) - 1) \
-                    or node_position[0] < 0 \
-                    or node_position[1] > (len(maze[len(maze) - 1]) - 1) \
-                    or node_position[1] < 0:
+        for (x, y) in adjacent(current_node.position):
+            if maze[x][y] == 1:
                 continue
 
-            # Make sure walkable terrain
-            if maze[node_position[0]][node_position[1]] != 0:
+            if (x, y) in closed_set:
                 continue
 
-            # Create new node
-            new_node = Node(current_node, node_position)
+            new_node = Node(current_node, (x, y))
+            new_node.g = current_node.g + 1
+            new_node.h = distance(new_node.position, end_node.position)
+            new_node.f = new_node.g + new_node.h
 
-            # Append
-            children.append(new_node)
+            if (x, y) in open_dict and open_dict[(x, y)].g < new_node.g:
+                continue
 
-        # Loop through children
-        for child in children:
-
-            # Child is on the closed list
-            for closed_child in closed_list:
-                if child == closed_child:
-                    continue
-
-            # Create the f, g, and h values
-            child.g = current_node.g + 1
-            child.h = ((child.position[0] - end_node.position[0]) ** 2) + (
-                    (child.position[1] - end_node.position[1]) ** 2)
-            child.f = child.g + child.h
-
-            # Child is already in the open list
-            for open_node in open_list:
-                if child == open_node and child.g > open_node.g:
-                    continue
-
-            # Add the child to the open list
-            open_list.append(child)
+            open_dict[(x, y)] = new_node
 
 
 def main():
