@@ -36,19 +36,23 @@ class Task(object):
 
 
 class Solution2(object):
+    """
+    AAAAABBBEEFFGG 3
+    Do stats we can get: A(5), B(3), E(2), F(2), G(2)
+    The final task execution plan could be (AXXX) + (AXXX) + (AXXX) + (AXXX) + A, then insert others into those groups,
+    therefore we can get below result:
+       (n + 1) & (most_freq - 1) + count of most_freq, that is:
+       (3 + 1) * (5 - 1) + 1 = 17
+    However, sometimes by following above pattern, we might NOT have enough space to insert all other tasks, e.g:
+    AACCCBEEE 2 -> (CEX) + (CEX) + CE + X, actually the result in this situation must be the len(tasks).
+    """
 
     @staticmethod
     def least_interval(tasks, n):
-        c = [0 for _ in range(26)]
-        for ch in tasks:
-            c[ord(ch) - ord('A')] += 1
-
-        c = sorted(c)
-        i = 25
-        while i >= 0 and c[i] == c[25]:
-            i -= 1
-
-        return max(len(tasks), (c[25] - 1) * (n + 1) + 25 - i)
+        freq_list = [_ for _ in Counter(tasks).values()]
+        most_freq = max(freq_list)
+        most_freq_cnt = freq_list.count(most_freq)
+        return max(len(tasks), (n + 1) * (most_freq - 1) + most_freq_cnt)
 
 
 class Solution(object):
@@ -96,5 +100,7 @@ class Solution(object):
             cooling_list[i + 1] = None
 
 
-# print(Solution().least_interval(["A", "B", "C", "A", "B"], 2))
-print(Solution2().least_interval(["A", "A", "A", "B", "B", "B"], 2))
+print(Solution2().least_interval([ch for ch in 'AAABBB'], 0))
+print(Solution2().least_interval([ch for ch in 'ABCAB'], 2))
+print(Solution2().least_interval([ch for ch in 'AAABBB'], 2))
+print(Solution2().least_interval([ch for ch in 'AAAAABBBEEFFGG'], 3))

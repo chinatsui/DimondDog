@@ -1,4 +1,4 @@
-class Node(object):
+class Node:
     def __init__(self, val, prev, next, child):
         self.val = val
         self.prev = prev
@@ -12,7 +12,7 @@ class ListNode:
         self.next = None
 
 
-class RandomListNode(object):
+class RandomListNode:
     def __init__(self, x):
         self.label = x
         self.next = None

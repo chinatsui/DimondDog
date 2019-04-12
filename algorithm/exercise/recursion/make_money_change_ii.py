@@ -29,20 +29,20 @@ class Solution:
     def make_change(self, n):
         return self._dfs(n, 25)
 
-    def _dfs(self, n, denom):
-        if denom == 25:
-            next_denom = 10
-        elif denom == 10:
-            next_denom = 5
-        elif denom == 5:
-            next_denom = 1
-        elif denom == 1:
+    def _dfs(self, n, coin):
+        if coin == 25:
+            next_coin = 10
+        elif coin == 10:
+            next_coin = 5
+        elif coin == 5:
+            next_coin = 1
+        elif coin == 1:
             return 1
 
         i = 0
         ways = 0
-        while denom * i <= n:
-            ways += self._dfs(n - denom * i, next_denom)
+        while coin * i <= n:
+            ways += self._dfs(n - coin * i, next_coin)
             i += 1
 
         return ways
