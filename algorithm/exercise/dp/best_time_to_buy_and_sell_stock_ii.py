@@ -32,8 +32,11 @@ class Solution:
     @staticmethod
     def max_profit(prices):
         """
-        :type prices: List[int]
-        :rtype: int
+        If tomorrow's price is higher than today, then profit is positive, otherwise 0.
+        So greedy algorithm works here, as we can "combine" profit from previous transaction.
+        For example of [1, 3, 7], we can have below ways of transaction:
+            buy:1, sell:7, profit: 6
+            buy:1, sell:3, buy:3, sell:7, profit: 2 + 4 = 6
         """
         if not prices:
             return 0
@@ -43,3 +46,6 @@ class Solution:
             profit += max(0, prices[i] - prices[i - 1])
 
         return profit
+
+
+print(Solution().max_profit([7, 1, 5, 3, 6, 4]))

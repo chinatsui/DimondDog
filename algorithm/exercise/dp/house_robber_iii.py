@@ -40,10 +40,6 @@ from algorithm.core.binary_tree import BinaryTree as bt
 class Solution:
 
     def rob(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
         cache = dict()
         return max(self._dfs(root, True, cache), self._dfs(root, False, cache))
 
@@ -71,5 +67,32 @@ class Solution:
             return sum
 
 
-t_root = bt.deserialize([2, 1, 3, None, 4])
-print(Solution().rob(t_root))
+class Solution2:
+    def rob(self, root):
+        return self._dfs(root, {})
+
+    def _dfs(self, node, cache):
+        if not node:
+            return 0
+
+        if node in cache:
+            return cache[node]
+
+        left, right = node.left, node.right
+
+        way_1 = node.val
+        if left:
+            way_1 += self._dfs(left.left, cache) + self._dfs(left.right, cache)
+
+        if right:
+            way_1 += self._dfs(right.left, cache) + self._dfs(right.right, cache)
+
+        way_2 = self._dfs(left, cache) + self._dfs(right, cache)
+
+        res = max(way_1, way_2)
+        cache[node] = res
+        return res
+
+# t_root = bt.deserialize([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+# print(Solution().rob(t_root))
+# print(Solution2().rob(t_root))
