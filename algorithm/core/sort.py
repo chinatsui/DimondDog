@@ -1,7 +1,5 @@
 def swap(nums, src, dst):
-    tmp = nums[dst]
-    nums[dst] = nums[src]
-    nums[src] = tmp
+    nums[src], nums[dst] = nums[dst], nums[src]
 
 
 class QuickSort:
@@ -137,33 +135,33 @@ class HeapSort:
             return
 
         self._heapify(nums)
-        n = len(nums) - 1
-        while n:
-            swap(nums, 0, n)
-            n -= 1
-            self._sink(nums, 0, n)
+        tail = len(nums) - 1
+        while tail:
+            swap(nums, 0, tail)
+            self._sink(nums, 0, tail - 1)
+            tail -= 1
 
     def _heapify(self, nums):
-        n = len(nums) - 1
-        i = n // 2
-        while i >= 0:
-            self._sink(nums, i, n)
+        n = len(nums)
+        i = n // 2 - 1
+        while i > 0:
+            self._sink(nums, i, n - 1)
             i -= 1
 
     def _sink(self, nums, idx, bound):
         l_idx = (idx + 1) * 2 - 1
         r_idx = (idx + 1) * 2
 
-        if l_idx > bound:
-            return
-
-        if l_idx == bound or nums[l_idx] > nums[r_idx]:
-            if nums[idx] < nums[l_idx]:
+        if r_idx <= bound:
+            if nums[l_idx] <= nums[r_idx] and nums[idx] < nums[r_idx]:
+                swap(nums, idx, r_idx)
+                self._sink(nums, r_idx, bound)
+            elif nums[r_idx] <= nums[l_idx] and nums[idx] < nums[l_idx]:
                 swap(nums, idx, l_idx)
                 self._sink(nums, l_idx, bound)
-        elif nums[idx] < nums[r_idx]:
-            swap(nums, idx, r_idx)
-            self._sink(nums, r_idx, bound)
+        elif l_idx <= bound:
+            if nums[idx] < nums[l_idx]:
+                swap(nums, idx, l_idx)
 
 
 class BubbleSort:
@@ -192,7 +190,11 @@ class InsertionSort:
                 if nums[j] < nums[j - 1]:
                     nums[j], nums[j - 1] = nums[j - 1], nums[j]
 
-# t_nums = [4, 6, 3, 2, 16, 32, 14, 67, 88, 65, 34]
+
+t_nums = [25, 68, 68, 62, 68, 56, 30, 56,
+          32, 64, 41, 6, 39, 19, 28, 46,
+          11, 18, 53, 59, 11, 71, 73, 75,
+          76, 80, 83, 85, 91, 99]
 # QuickSort().sort(t_nums)
 # MergeSort().sort(t_nums)
 # QuickSort2().sort(t_nums)

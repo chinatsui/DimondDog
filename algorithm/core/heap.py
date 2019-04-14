@@ -1,51 +1,48 @@
 class MinHeap:
 
     def __init__(self):
-        self.data = []
+        self.nums = []
 
     def offer(self, num):
-        self.data.append(num)
-        idx = len(self.data) - 1
-        self._swim(idx)
+        self.nums.append(num)
+        self._swim(self.size() - 1)
 
     def poll(self):
-        res = self.data[0]
-        self._swap(0, len(self.data) - 1)
-        self.data.pop()
+        self._swap(0, -1)
+        res = self.nums.pop()
         self._sink(0)
         return res
 
     def size(self):
-        return len(self.data) - 1
+        return len(self.nums)
 
     def _swap(self, src, dst):
-        tmp = self.data[dst]
-        self.data[dst] = self.data[src]
-        self.data[src] = tmp
+        self.nums[src], self.nums[dst] = self.nums[dst], self.nums[src]
 
     def _swim(self, idx):
         if not idx:
             return
+
         p_idx = (idx - 1) // 2
-        if self.data[idx] < self.data[p_idx]:
+        if self.nums[idx] < self.nums[p_idx]:
             self._swap(p_idx, idx)
             self._swim(p_idx)
 
     def _sink(self, idx):
         l_idx = (idx + 1) * 2 - 1
         r_idx = (idx + 1) * 2
+        bound = self.size() - 1
 
-        if l_idx > len(self.data) - 1:
-            return
-
-        if l_idx == len(self.data) - 1 or self.data[l_idx] < self.data[r_idx]:
-            if self.data[idx] > self.data[l_idx]:
+        if r_idx <= bound:
+            if self.nums[l_idx] <= self.nums[r_idx] and self.nums[idx] > self.nums[l_idx]:
                 self._swap(idx, l_idx)
                 self._sink(l_idx)
-        else:
-            if self.data[idx] > self.data[r_idx]:
+            elif self.nums[r_idx] <= self.nums[l_idx] and self.nums[idx] > self.nums[r_idx]:
                 self._swap(idx, r_idx)
                 self._sink(r_idx)
+        elif l_idx <= bound:
+            if self.nums[idx] > self.nums[l_idx]:
+                self._swap(idx, l_idx)
 
 
 t_min_heap = MinHeap()
