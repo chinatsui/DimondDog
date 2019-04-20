@@ -16,10 +16,6 @@ A linked list can be reversed either iteratively or recursively. Could you imple
 class Solution(object):
     @staticmethod
     def reverse_list(head):
-        """
-        :type head: ListNode
-        :rtype: ListNode
-        """
         if head is None:
             return None
 

@@ -16,34 +16,29 @@ Follow up:
 
 Could you do this in one pass?
 """
-from algorithm.core.linked_list import ListNode
 
 
 class Solution(object):
     @staticmethod
     def remove_nth_from_end(head, n):
-        """
-        :type head: ListNode
-        :type n: int
-        :rtype: ListNode
-        """
-        if head is None:
-            return None
+        if not head and n:
+            return head
 
-        slow = ListNode(0)
-        slow.next = head
         fast = head
-        while n > 0:
+        while n:
             fast = fast.next
             n -= 1
 
+        prev, slow = None, head
         while fast:
-            fast = fast.next
+            prev = slow
             slow = slow.next
+            fast = fast.next
 
-        if slow.next == head:
-            return head.next
+        if prev:
+            prev.next = slow.next
         else:
-            slow.next = slow.next.next
+            # in the case of delete first node
+            head = head.next
 
         return head
