@@ -11,7 +11,9 @@ Output: 6
 
 
 class Solution:
-    def trap(self, height):
+
+    @staticmethod
+    def trap(height):
         """
         :type height: List[int]
         :rtype: int
@@ -31,5 +33,28 @@ class Solution:
             else:
                 water += left_wall - height[left]
                 left += 1
+
+        return water
+
+
+class Solution2:
+
+    @staticmethod
+    def trap(height) -> int:
+        if not height:
+            return 0
+
+        lo, hi = 0, len(height) - 1
+        lo_wall, right_wall = height[lo], height[hi]
+        water = 0
+        while lo < hi:
+            if height[lo] < height[hi]:
+                water += max(0, min(lo_wall, right_wall) - height[lo])
+                lo += 1
+                lo_wall = max(lo_wall, height[lo])
+            else:
+                water += max(0, min(lo_wall, right_wall) - height[hi])
+                hi -= 1
+                right_wall = max(right_wall, height[hi])
 
         return water
