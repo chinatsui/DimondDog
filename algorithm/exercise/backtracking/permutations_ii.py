@@ -17,10 +17,6 @@ Output:
 
 class Solution:
     def permute_unique(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
         res = []
         nums = sorted(nums)  # very important for duplicated element skip
         self._backtrack([], res, nums, [False] * len(nums))

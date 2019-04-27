@@ -7,6 +7,7 @@ class Knapsack:
         if not self._is_valid(weights, capacity):
             return [], -1
 
+        weights = sorted(weights)
         n = len(weights)
         dp = [[False for _ in range(capacity + 1)] for _ in range(n)]
         dp[0][0] = True
@@ -32,7 +33,7 @@ class Knapsack:
         # find what items are selected
         items, weight = [], max_weight
         for i in range(n - 1, 0, -1):
-            if dp[i - 1][weight - weights[i]]:
+            if weight >= weights[i] and dp[i - 1][weight - weights[i]]:
                 items.append(weights[i])
                 weight -= weights[i]
 
@@ -46,7 +47,7 @@ class Knapsack:
         dp[i][j] refers to the max weight of first i (not "i"th) elements in the capacity of j.
 
         if j >= weights[i-1]:
-            dp[i][j] = max(dp[i-1][j - weights[i-1]] + weights[i-1], dp[i-1][j])
+            dp[i][j] = dp[i-1][j - weights[i-1]] + weights[i-1]
         else:
             dp[i][j] = dp[i-1][j]
         """
@@ -107,7 +108,7 @@ class KnapsackII:
         # find what items are selected
         items, weight, value = [], max_weight, max_value
         for i in range(n - 1, 0, -1):
-            if dp[i - 1][weight - weights[i]] == value - values[i]:
+            if weight > weights[i] and dp[i - 1][weight - weights[i]] == value - values[i]:
                 items.append((weights[i], values[i]))
                 weight -= weights[i]
                 value -= values[i]
@@ -148,7 +149,7 @@ class KnapsackII:
         else:
             return True
 
-# print(Knapsack().resolve([1, 3, 6, 8], 13))
+# print(Knapsack().resolve([10, 1, 2, 7, 6, 1, 5], 8))
 # print(Knapsack().resolve_v2([1, 3, 6, 8], 13))
 # print(KnapsackII().resolve([2, 2, 6, 5, 4], [6, 3, 5, 4, 6], 10))
 # print(KnapsackII().resolve_v2([2, 2, 6, 5, 4], [6, 3, 5, 4, 6], 10))

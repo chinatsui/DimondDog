@@ -19,10 +19,6 @@ Output:
 
 class Solution:
     def permute(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
         res = []
         self._backtrack([], res, nums, [False] * len(nums))
         return res
@@ -39,24 +35,4 @@ class Solution:
                 is_used[i] = False
 
 
-class Solution2:
-    def permute(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        res = list()
-        self._backtrack(list(), res, set(nums), len(nums))
-        return res
-
-    def _backtrack(self, cur, res, candidates, end):
-        if len(cur) == end:
-            res.append(cur)
-            return
-
-        for i in candidates:
-            self._backtrack(cur + [i], res, candidates - set([i]), end)
-
-
 print(Solution().permute([1, 2, 3]))
-print(Solution2().permute([1, 2, 3]))

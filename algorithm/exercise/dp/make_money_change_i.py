@@ -12,7 +12,7 @@ class MakeMoneyChanges:
     @staticmethod
     def resolve(coins, money):
         """
-        dp[i] = 1 + min([dp[i - coins[j]] for j in range (len(coins) if i>= coins[j])])
+        dp[i] = 1 + min([dp[i - j]), j in the coins where value is less than i
         """
         coins = sorted(coins)
         dp = [-1 for _ in range(money + 1)]

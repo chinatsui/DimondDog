@@ -30,28 +30,18 @@ A solution set is:
 
 
 class Solution:
-    def combination_sum(self, candidates, target):
-        """
-        :type candidates: List[int]
-        :type target: int
-        :rtype: List[List[int]]
-        """
-        if not candidates:
-            return []
-
-        res = []
-        self._backtrack(candidates, target, 0, [], res)
+    def combinationSum(self, candidates, target):
+        res, candidates = [], sorted(candidates)
+        self.backtrack(candidates, target, res, [], 0)
         return res
 
-    def _backtrack(self, candidates, target, i, cur, res):
-        if target == 0:
+    def backtrack(self, candidates, target, res, cur, i):
+        if sum(cur) == target:
             res.append(cur)
-        elif target < 0:
+        elif sum(cur) > target:
             return
         else:
-            n = len(candidates)
-            for j in range(i, n):
-                if j > i and candidates[j] == candidates[j - 1]:
-                    continue
-                val = candidates[j]
-                self._backtrack(candidates, target - val, j, cur + [val], res)
+            for k in range(i, len(candidates)):
+                if candidates[k] > target:
+                    break
+                self.backtrack(candidates, target, res, cur + [candidates[k]], k)

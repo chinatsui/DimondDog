@@ -27,12 +27,12 @@ class Solution:
                 self._place(row + 1, nxt, rc_map, res)
 
     @staticmethod
-    def _check(row, col, row_col_map):
+    def _check(row, col, rc_map):
         for r in range(row):
-            if row_col_map[r] == col:  # check column
+            if rc_map[r] == col:  # check column
                 return False
 
-            if abs(r - row) == abs(row_col_map[r] - col):  # check diagonal line
+            if abs(r - row) == abs(rc_map[r] - col):  # check diagonal line
                 return False
         return True
 

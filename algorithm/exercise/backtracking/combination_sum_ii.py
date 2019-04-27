@@ -32,11 +32,6 @@ A solution set is:
 
 class Solution:
     def combinationSum2(self, candidates, target):
-        """
-        :type candidates: List[int]
-        :type target: int
-        :rtype: List[List[int]]
-        """
         if not candidates:
             return []
 
@@ -51,8 +46,7 @@ class Solution:
         elif target < 0:
             return
         else:
-            n = len(candidates)
-            for j in range(i, n):
+            for j in range(i, len(candidates)):
                 if j > i and candidates[j] == candidates[j - 1]:
                     continue
                 val = candidates[j]
