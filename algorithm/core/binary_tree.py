@@ -122,7 +122,7 @@ class BinaryTree:
             if res[i] is not None:
                 res = res[:i + 1]
                 break
-                
+
         return res
 
 
@@ -187,44 +187,36 @@ class PostorderIterator:
     def _push_nodes(stack, node):
         while node:
             stack.append(node)
-            if node.left:
-                node = node.left
-            else:
-                node = node.right
+            node = node.left if node.left else node.right
 
 
 def test_binary_tree_levelorder_traverse():
-    t_root = BinaryTree.deserialize(
-        [1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
+    t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     print('levelorder traverse:', end=' ')
     print(BinaryTree.levelorder_traverse(t_root))
 
 
 def test_binary_tree_preorder_traverse():
-    t_root = BinaryTree.deserialize(
-        [1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
+    t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     print('preorder traverse:'.rjust(20, ' '), end=' ')
     print(BinaryTree.preorder_traverse(t_root))
 
 
 def test_binary_tree_inorder_traverse():
-    t_root = BinaryTree.deserialize(
-        [1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
+    t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     print('inorder traverse:'.rjust(20, ' '), end=' ')
     print(BinaryTree.inorder_traverse(t_root))
 
 
 def test_binary_tree_postorder_traverse():
-    t_root = BinaryTree.deserialize(
-        [1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
+    t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     print('postorder traverse:'.rjust(20, ' '), end=' ')
     print(BinaryTree.postorder_traverse(t_root))
 
 
 def test_preorder_iterator():
     t_res = []
-    t_root = BinaryTree.deserialize(
-        [1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
+    t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     preorder_itr = PreorderIterator(t_root)
     while preorder_itr.has_next():
         t_res.append(preorder_itr.next())
@@ -234,8 +226,7 @@ def test_preorder_iterator():
 
 def test_inorder_iterator():
     t_res = []
-    t_root = BinaryTree.deserialize(
-        [1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
+    t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     inorder_itr = InorderIterator(t_root)
     while inorder_itr.has_next():
         t_res.append(inorder_itr.next())
@@ -245,25 +236,22 @@ def test_inorder_iterator():
 
 def test_postorder_iterator():
     t_res = []
-    t_root = BinaryTree.deserialize(
-        [1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
+    t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     postorder_itr = PostorderIterator(t_root)
     while postorder_itr.has_next():
         t_res.append(postorder_itr.next())
     print('postorder iterator:'.rjust(20, ' '), end=' ')
     print(t_res)
 
+#            1
+#          /   \
+#         2     3
+#        / \   / \
+#       4   5 6   7
+#      /           \
+#     8             9
 
-"""
-            1
-          /   \
-         2     3
-        / \   / \
-       4   5 6   7
-      /           \
-     8             9
 
-"""
 # test_binary_tree_levelorder_traverse()
 # test_binary_tree_preorder_traverse()
 # test_preorder_iterator()

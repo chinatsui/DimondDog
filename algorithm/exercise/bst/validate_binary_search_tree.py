@@ -29,55 +29,40 @@ Explanation: The input is: [5,1,4,null,null,3,6]. The root node's value
 
 
 class Solution1:
-    def is_valid_bst(self, root):
-        """
-        :type root: TreeNode
-        :rtype: bool
-        """
-        track = None
-        stack = []
-        while root or stack:
-            while not self._is_leaf(root):
-                stack.append(root)
-                root = root.left
-
-            if root:
-                if track is None or track < root.val:
-                    track = root.val
-                else:
-                    return False
-
-            while stack and stack[-1].right == root:
-                root = stack.pop()
-
-            if stack:
-                if track is None or track < stack[-1].val:
-                    track = stack[-1].val
-                else:
-                    return False
-                root = stack[-1].right
-            else:
-                root = None
-        return True
-
     @staticmethod
-    def _is_leaf(node):
-        return True if node is None else node.left is None and node.right is None
+    def is_valid_bst(root):
+        if not root:
+            return True
+
+        s = []
+
+        while root:
+            s.append(root)
+            root = root.left
+
+        _min = float('-inf')
+        while s:
+            node = s.pop()
+            if _min >= node.val:
+                return False
+            else:
+                _min = node.val
+            cur = node.right
+            while cur:
+                s.append(cur)
+                cur = cur.left
+        return True
 
 
 class Solution2:
     def is_valid_bst(self, root):
-        """
-        :type root: TreeNode
-        :rtype: bool
-        """
         return self._traverse_check(root)
 
-    def _traverse_check(self, node, min=float('-inf'), max=float('inf')):
-        if node is None:
+    def _traverse_check(self, node, _min=float('-inf'), _max=float('inf')):
+        if not node:
             return True
 
-        if min >= node.val or max <= node.val:
+        if node.val <= _min or node.val >= _max:
             return False
 
-        return self._traverse_check(node.left, min, node.val) and self._traverse_check(node.right, node.val, max)
+        return self._traverse_check(node.left, _min, node.val) and self._traverse_check(node.right, node.val, _max)
