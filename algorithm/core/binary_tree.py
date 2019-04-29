@@ -50,35 +50,37 @@ class BinaryTree:
     def inorder_traverse(root):
         res, stack = [], []
 
-        while root:
-            stack.append(root)
-            root = root.left
+        def _push_nodes(stack, node):
+            while node:
+                stack.append(node)
+                node = node.left
+
+        _push_nodes(stack, root)
 
         while stack:
             node = stack.pop()
             res.append(node.val)
-            cur = node.right
-            while cur:
-                stack.append(cur)
-                cur = cur.left
+            _push_nodes(stack, node.right)
+
         return res
 
     @staticmethod
     def postorder_traverse(root):
         res = []
         stack = []
-        while root:
-            stack.append(root)
-            root = root.left if root.left else root.right
+
+        def _push_nodes(s, node):
+            while node:
+                s.append(node)
+                node = node.left if node.left else node.right
+
+        _push_nodes(stack, root)
 
         while stack:
             cur = stack.pop()
             res.append(cur.val)
             if stack and stack[-1].left == cur:
-                cur = stack[-1].right
-                while cur:
-                    stack.append(cur)
-                    root = root.left if root.left else root.right
+                _push_nodes(stack, stack[-1].right)
         return res
 
     @staticmethod
@@ -190,31 +192,31 @@ class PostorderIterator:
             node = node.left if node.left else node.right
 
 
-def test_binary_tree_levelorder_traverse():
+def binary_tree_levelorder_traverse_test():
     t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     print('levelorder traverse:', end=' ')
     print(BinaryTree.levelorder_traverse(t_root))
 
 
-def test_binary_tree_preorder_traverse():
+def binary_tree_preorder_traverse_test():
     t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     print('preorder traverse:'.rjust(20, ' '), end=' ')
     print(BinaryTree.preorder_traverse(t_root))
 
 
-def test_binary_tree_inorder_traverse():
+def binary_tree_inorder_traverse_test():
     t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     print('inorder traverse:'.rjust(20, ' '), end=' ')
     print(BinaryTree.inorder_traverse(t_root))
 
 
-def test_binary_tree_postorder_traverse():
+def binary_tree_postorder_traverse_test():
     t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     print('postorder traverse:'.rjust(20, ' '), end=' ')
     print(BinaryTree.postorder_traverse(t_root))
 
 
-def test_preorder_iterator():
+def preorder_iterator_test():
     t_res = []
     t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     preorder_itr = PreorderIterator(t_root)
@@ -224,7 +226,7 @@ def test_preorder_iterator():
     print(t_res)
 
 
-def test_inorder_iterator():
+def inorder_iterator_test():
     t_res = []
     t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     inorder_itr = InorderIterator(t_root)
@@ -234,7 +236,7 @@ def test_inorder_iterator():
     print(t_res)
 
 
-def test_postorder_iterator():
+def postorder_iterator_test():
     t_res = []
     t_root = BinaryTree.deserialize([1, 2, 3, 4, 5, 6, 7, 8, None, None, None, None, None, None, 9])
     postorder_itr = PostorderIterator(t_root)
@@ -252,10 +254,10 @@ def test_postorder_iterator():
 #     8             9
 
 
-# test_binary_tree_levelorder_traverse()
-# test_binary_tree_preorder_traverse()
-# test_preorder_iterator()
-# test_binary_tree_inorder_traverse()
-# test_inorder_iterator()
-# test_binary_tree_postorder_traverse()
-# test_postorder_iterator()
+# binary_tree_levelorder_traverse_test()
+# binary_tree_preorder_traverse_test()
+binary_tree_inorder_traverse_test()
+# binary_tree_postorder_traverse_test()
+# preorder_iterator_test()
+# inorder_iterator_test()
+# postorder_iterator_test()
