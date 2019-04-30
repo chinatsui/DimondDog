@@ -18,15 +18,12 @@ Follow up:
 
 What if the given array is already sorted? How would you optimize your algorithm?
 What if nums1's size is small compared to nums2's size? Which algorithm is better?
-What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
+What if elements of nums2 are stored on disk, and the memory is limited such that
+you cannot load all elements into the memory at once?
 """
 
 
 class Solution:
-    """
-    In addition to BinarySearch, two pointers are also a good approach for a sorted array.
-    """
-
     @staticmethod
     def intersect(nums1, nums2):
         if not nums1 or not nums2:
@@ -49,4 +46,23 @@ class Solution:
         return res
 
 
-print(Solution().intersect([1, 2, 2, 1], [2, 2]))
+from collections import Counter
+
+
+class Solution2:
+    @staticmethod
+    def intersect(nums1, nums2):
+        if not nums1 or not nums2:
+            return []
+
+        cnt1, res = Counter(nums1), []
+        for n in nums2:
+            if n in cnt1 and cnt1[n] > 0:
+                res.append(n)
+                cnt1[n] -= 1
+
+        return res
+
+
+print(Solution().intersect([1, 2, 2, 1], [2, 1, 2]))
+print(Solution2().intersect([1, 2, 2, 1], [2, 1, 2]))

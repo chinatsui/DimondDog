@@ -18,10 +18,6 @@ Output: 5
 class Solution:
     @staticmethod
     def length_of_last_word(s):
-        """
-        :type s: str
-        :rtype: int
-        """
         s = s.strip()
         if not s:
             return 0

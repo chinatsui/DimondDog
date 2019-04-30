@@ -1,6 +1,6 @@
 """
-Given: "16.16.0.0", convert it to a integer number
-which corresponds to "00010000 00010000 000000000 000000000"
+Given: "16.16.0.0", convert it to an 32 bits integer, its binary representation
+is like "00010000 00010000 000000000 000000000"
 """
 
 
@@ -11,8 +11,7 @@ class Solution:
             return 0
 
         nums = self.get_numbers(s)
-        n = len(nums) - 1
-        res = 0
+        res, n = 0, 3
         for (i, num) in enumerate(nums):
             res += pow(2, (n - i) * 8) * num
         return res

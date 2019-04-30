@@ -30,49 +30,38 @@ Given an integer, convert it to a roman numeral. Input is guaranteed to be withi
 class Solution:
     @staticmethod
     def int_to_roman(num):
-        i, res = 1, ''
-        while num > 0:
-            cur = num % 10
-            tmp = ''
-            if i == 1:
-                if 1 <= cur < 4:
-                    tmp = 'I' * cur
-                elif cur == 4:
-                    tmp = 'IV'
-                elif cur == 5:
-                    tmp = 'V'
-                elif 5 < cur < 9:
-                    tmp = 'V' + 'I' * (cur - 5)
-                elif cur == 9:
-                    tmp = 'IX'
-            elif i == 10:
-                if 1 <= cur < 4:
-                    tmp = 'X' * cur
-                elif cur == 4:
-                    tmp = 'XL'
-                elif cur == 5:
-                    tmp = 'L'
-                elif 5 < cur < 9:
-                    tmp = 'L' + 'X' * (cur - 5)
-                elif cur == 9:
-                    tmp = 'XC'
-            elif i == 100:
-                if 1 <= cur < 4:
-                    tmp = 'C' * cur
-                elif cur == 4:
-                    tmp = 'CD'
-                elif cur == 5:
-                    tmp = 'D'
-                elif 5 < cur < 9:
-                    tmp = 'D' + 'C' * (cur - 5)
-                elif cur == 9:
-                    tmp = 'CM'
-            elif i == 1000:
-                tmp = 'M' * cur
-            res = tmp + res
+        if num < 1 or num > 3999:
+            return None
+
+        def convert(lo, mi, hi, di):
+            if 1 <= di <= 3:
+                return lo * di
+            elif di == 4:
+                return lo + mi
+            elif di == 5:
+                return mi
+            elif 6 <= di <= 8:
+                return mi + lo * (di - 5)
+            else:
+                return lo + hi
+
+        res, i = '', 1
+        while num:
+            di = num % 10
+
+            if di != 0:
+                if i == 1:
+                    res = convert('I', 'V', 'X', di) + res
+                elif i == 10:
+                    res = convert('X', 'L', 'C', di) + res
+                elif i == 100:
+                    res = convert('C', 'D', 'M', di) + res
+                elif i == 1000:
+                    res = 'M' * di + res
             i *= 10
             num = num // 10
+
         return res
 
 
-print(Solution().int_to_roman(3999))
+print(Solution().int_to_roman(10))
