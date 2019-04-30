@@ -41,13 +41,8 @@ Another valid answer is [5,2,6,null,4,null,7].
 """
 
 
-class Solution(object):
+class Solution1:
     def delete_node(self, root, key):
-        """
-        :type root: TreeNode
-        :type key: int
-        :rtype: TreeNode
-        """
         if root is None:
             return None
 
@@ -72,3 +67,42 @@ class Solution(object):
         while node.left:
             node = node.left
         return node.val
+
+
+class Solution2:
+    @staticmethod
+    def delete_node(root, key):
+        if not root:
+            return root
+
+        cur, parent = root, None
+
+        while cur and cur.val != key:
+            parent = cur
+            if key < cur.val:
+                cur = cur.left
+            else:
+                cur = cur.right
+
+        if not cur:
+            return root
+
+        if cur.left and cur.right:
+            _min, _min_parent = cur.right, cur
+            while _min.left:
+                _min_parent = _min
+                _min = _min.left
+            cur.val = _min.val
+            cur = _min
+            parent = _min_parent
+
+        child = cur.left if cur.left else cur.right
+
+        if not parent:
+            return child
+        elif parent.left == cur:
+            parent.left = child
+        else:
+            parent.right = child
+
+        return root

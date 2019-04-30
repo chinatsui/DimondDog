@@ -24,7 +24,7 @@ You can return this binary search tree:
        /   \
       2     7
      / \   /
-    1   3 5
+    1  3  5
 
 This tree is also valid:
 
@@ -39,14 +39,9 @@ This tree is also valid:
 from algorithm.core.binary_tree import TreeNode
 
 
-class Solution(object):
+class Solution1(object):
 
     def insert_into_bst(self, root, val):
-        """
-        :type root: TreeNode
-        :type val: int
-        :rtype: TreeNode
-        """
         if not root:
             return TreeNode(val)
 
@@ -56,3 +51,28 @@ class Solution(object):
             root.right = self.insert_into_bst(root.right, val)
 
         return root
+
+
+class Solution2(object):
+
+    @staticmethod
+    def insert_into_bst(root, val):
+        if not root:
+            return TreeNode(val)
+
+        cur = root
+        while cur:
+            if val < cur.val:
+                if not cur.left:
+                    cur.left = TreeNode(val)
+                    return root
+                else:
+                    cur = cur.left
+            elif val > cur.val:
+                if not cur.right:
+                    cur.right = TreeNode(val)
+                    return root
+                else:
+                    cur = cur.right
+            else:
+                return root

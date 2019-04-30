@@ -28,13 +28,8 @@ Note that an empty tree is represented by NULL, therefore you would see the expe
 """
 
 
-class Solution(object):
+class Solution1:
     def search_in_bst(self, root, val):
-        """
-        :type root: TreeNode
-        :type val: int
-        :rtype: TreeNode
-        """
         if val == root.val:
             return root
         elif val < root.val and root.left:
@@ -43,3 +38,20 @@ class Solution(object):
             return self.search_in_bst(root.right, val)
         else:
             return None
+
+
+class Solution2:
+    @staticmethod
+    def search_in_bst_v2(root, val):
+        if not root:
+            return root
+
+        while root:
+            if root.val == val:
+                return root
+            elif val < root.val:
+                root = root.left
+            else:
+                root = root.right
+
+        return root
