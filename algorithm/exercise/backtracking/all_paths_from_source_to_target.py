@@ -25,18 +25,17 @@ You can print different paths in any order, but you should keep the order of nod
 
 class Solution:
     def all_path_source_target(self, graph):
-        res = []
-        self._back_track([], 0, graph, res)
+        res, cur, target = [], [0], len(graph) - 1
+        self._dfs(graph, res, cur, target)
         return res
 
-    def _back_track(self, cur, v, graph, res):
-        if v == len(graph) - 1:
-            res.append(cur + [v])
-        elif not len(graph) and v != len(graph) - 1:
-            return
+    def _dfs(self, graph, res, cur, target):
+        if cur[-1] == target:
+            res.append(cur)
         else:
+            v = cur[-1]
             for w in graph[v]:
-                self._back_track(cur + [v], w, graph, res)
+                self._dfs(graph, res, cur + [w], target)
 
 
 print(Solution().all_path_source_target([[1, 2], [3], [3], []]))

@@ -25,12 +25,87 @@ Two cells are connected if they are adjacent cells connected horizontally or ver
 from collections import deque
 
 
-class BFSSolution:
+class DFSSolution:
     def solve(self, board):
-        """
-        :type board: List[List[str]]
-        :rtype: void Do not return anything, modify board in-place instead.
-        """
+        if not board or not board[0]:
+            return board
+
+        m, n = len(board), len(board[0])
+
+        for j in range(n):
+            if board[0][j] == 'O':
+                self._paint(board, 0, j, 'A')
+
+            if board[m - 1][j] == 'O':
+                self._paint(board, m - 1, j, 'A')
+
+        for i in range(m):
+            if board[i][0] == 'O':
+                self._paint(board, i, 0, 'A')
+
+            if board[i][n - 1] == 'O':
+                self._paint(board, i, n - 1, 'A')
+
+        for i in range(1, m - 1):
+            for j in range(1, n - 1):
+                if board[i][j] == 'O':
+                    self._paint(board, i, j, 'X')
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'A':
+                    board[i][j] = 'O'
+
+    def _paint(self, board, x, y, ch):
+        if x < 0 or x == len(board) or y < 0 or y == len(board[0]) or board[x][y] != 'O':
+            return
+
+        board[x][y] = ch
+
+        self._paint(board, x + 1, y, ch)
+        self._paint(board, x - 1, y, ch)
+        self._paint(board, x, y + 1, ch)
+        self._paint(board, x, y - 1, ch)
+
+
+class DFSSolution2:
+    def solve(self, board):
+        if not board or not board[0]:
+            return
+
+        m, n = len(board), len(board[0])
+        visited = set()
+        for i in range(m):
+            for j in range(n):
+                if (i, j) not in visited and board[i][j] == 'O':
+                    if i == 0 or i == m - 1 or n == 0 or n == n - 1:
+                        self._dfs(board, i, j, visited, 'U')
+                    else:
+                        self._dfs(board, i, j, visited, 'X')
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'U':
+                    board[i][j] = 'O'
+
+    def _dfs(self, board, x, y, visited, mark):
+        board[x][y] = mark
+        visited.add((x, y))
+
+        for (nx, ny) in self.adjacent(board, x, y):
+            if (nx, ny) not in visited and board[nx][ny] == 'O':
+                self._dfs(board, nx, ny, visited, mark)
+
+    @staticmethod
+    def adjacent(board, i, j):
+        for (x, y) in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]:
+            if 0 <= x < len(board) and 0 <= y < len(board[0]):
+                yield (x, y)
+
+
+class BFSSolution:
+    @staticmethod
+    def solve(board):
         if not board or not board[0]:
             return
 
@@ -74,41 +149,6 @@ class BFSSolution:
                             board[x][y] = 'O'
 
                     trace.clear()
-
-
-class DFSSolution:
-    def solve(self, board):
-        if not board or not board[0]:
-            return
-
-        m, n = len(board), len(board[0])
-        visited = set()
-        for i in range(m):
-            for j in range(n):
-                if (i, j) not in visited and board[i][j] == 'O':
-                    if (i == 0 or i == m - 1 or n == 0 or n == n - 1):
-                        self._dfs(board, i, j, visited, 'U')
-                    else:
-                        self._dfs(board, i, j, visited, 'X')
-
-        for i in range(m):
-            for j in range(n):
-                if board[i][j] == 'U':
-                    board[i][j] = 'O'
-
-    def _dfs(self, board, x, y, visited, mark):
-        board[x][y] = mark
-        visited.add((x, y))
-
-        for (nx, ny) in self.adjacent(board, x, y):
-            if (nx, ny) not in visited and board[nx][ny] == 'O':
-                self._dfs(board, nx, ny, visited, mark)
-
-    @staticmethod
-    def adjacent(board, i, j):
-        for (x, y) in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]:
-            if 0 <= x < len(board) and 0 <= y < len(board[0]):
-                yield (x, y)
 
 
 t_board = [

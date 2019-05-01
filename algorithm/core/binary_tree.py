@@ -256,7 +256,7 @@ def postorder_iterator_test():
 
 # binary_tree_levelorder_traverse_test()
 # binary_tree_preorder_traverse_test()
-binary_tree_inorder_traverse_test()
+# binary_tree_inorder_traverse_test()
 # binary_tree_postorder_traverse_test()
 # preorder_iterator_test()
 # inorder_iterator_test()

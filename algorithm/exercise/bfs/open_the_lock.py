@@ -1,7 +1,8 @@
 """
 LeetCode-752
 
-You have a lock in front of you with 4 circular wheels. Each wheel has 10 slots: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'. 
+You have a lock in front of you with 4 circular wheels.
+Each wheel has 10 slots: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'.
 The wheels can rotate freely and wrap around: for example we can turn '9' to be '0', or '0' to be '9'. 
 Each move consists of turning one wheel one slot.
 
@@ -39,80 +40,48 @@ Output: -1
 Note:
 The length of deadends will be in the range [1, 500].
 target will not be in the list deadends.
-Every string in deadends and the string target will be a string of 4 digits from the 10,000 possibilities '0000' to '9999'.
+Every string in deadends and the string target will be a string of 4 digits
+from the 10,000 possibilities '0000' to '9999'.
 """
 from collections import deque
 
 
-class Solution1:
-    def open_lock(self, deadends, target):
+class Solution:
+    @staticmethod
+    def open_lock(deadends, target):
         """
         Usually BFS is a good way to find the shortest path to the goal.
         """
         if '0000' in deadends:
             return -1
-            
-        visited = set(deadends)
-        
-        start = '0000'
-        q = deque()
-        q.append((start, 1))
-        visited.add(start)
-        while q:
-            (cur, steps) = q.popleft()
-            for i in range(0, 4):
-                up = self._move_up(cur, i)
-                down = self._move_down(cur, i)
 
-                if up not in visited:
-                    if up == target:
-                        return steps
-                    q.append((up, steps + 1))
-                    visited.add(up)
+        if '0000' == target:
+            return 0
 
-                if down not in visited:
-                    if down == target:
-                        return steps
-                    q.append((down, steps + 1))
-                    visited.add(down)
-        return -1
-
-    @staticmethod
-    def _move_up(cur, digit):
-        val = (int(cur[digit]) + 1) % 10
-        return cur[:digit] + str(val) + cur[digit + 1:]
-
-    @staticmethod
-    def _move_down(cur, digit):
-        val = (int(cur[digit]) - 1) % 10
-        return cur[:digit] + str(val) + cur[digit + 1:]
-
-
-class Solution2:
-    @staticmethod
-    def open_lock(deadends, target):
-        moved = set(deadends)
-        q = ['0000']
-        steps = 0
         move = {str(i): [str((i + 1) % 10), str((i - 1) % 10)] for i in range(10)}
-
-        if '0000' in moved:
-            return -1
+        q, moved, steps = deque(['0000']), set(deadends), 0
+        moved.add('0000')
 
         while q:
-            next_round = []
             steps += 1
-            for s in q:
-                for i, c in enumerate(s):
-                    for cur in (s[:i] + move[c][0] + s[i + 1:], s[:i] + move[c][1] + s[i + 1:]):
-                        if cur not in moved:
-                            if cur == target:
-                                return steps
-                            next_round.append(cur)
-                            moved.add(cur)
-            q = next_round
+            tmp = []
+
+            for cur in q:
+                for i in range(len(cur)):
+                    up = cur[0:i] + move[cur[i]][0] + cur[i + 1:]
+                    down = cur[0:i] + move[cur[i]][1] + cur[i + 1:]
+                    for nxt in [up, down]:
+                        if nxt in moved:
+                            continue
+
+                        if nxt == target:
+                            return steps
+                        else:
+                            moved.add(nxt)
+                            tmp.append(nxt)
+            q = deque(tmp)
 
         return -1
 
 
-print(Solution1().open_lock(["2110", "0202", "1222", "2221", "1010"], '2010'))
+print(Solution().open_lock(["2110", "0202", "1222", "2221", "1010"], '6666'))

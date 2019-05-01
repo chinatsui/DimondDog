@@ -24,18 +24,13 @@ Output:
 
 class Solution:
     def subsets(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
         res = []
         self._backtrack([], res, nums, 0)
         return res
 
     def _backtrack(self, cur, res, nums, start):
         res.append(cur)
-        if start == len(nums):
-            return
+
         for i in range(start, len(nums)):
             self._backtrack(cur + [nums[i]], res, nums, i + 1)
 

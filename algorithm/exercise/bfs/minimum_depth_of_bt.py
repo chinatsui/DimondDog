@@ -19,31 +19,29 @@ Given binary tree [3,9,20,null,null,15,7],
 
 return its minimum depth = 2.
 """
+from collections import deque
 
 
 class Solution:
     @staticmethod
     def min_depth(root):
-        if root is None:
+        if not root:
             return 0
 
-        depth = 0
-        q = [root]
+        q = deque([(root, 1)])
+
         while q:
-            depth += 1
-            tmp = []
-            for node in q:
-                if node is None:
-                    continue
+            node, depth = q.popleft()
+            if not node.left and not node.right:
+                return depth
 
-                left = node.left
-                right = node.right
+            if node.left:
+                q.append((node.left, depth + 1))
 
-                if left is None and right is None:
-                    return depth
+            if node.right:
+                q.append((node.right, depth + 1))
 
-                tmp.append(left)
-                tmp.append(right)
-            q = tmp
 
-        return depth
+from algorithm.core.binary_tree import BinaryTree
+
+print(Solution().min_depth(BinaryTree().deserialize([1, 2, 3, 4, 5])))
