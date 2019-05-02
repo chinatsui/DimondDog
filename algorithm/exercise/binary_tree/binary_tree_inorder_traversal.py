@@ -21,12 +21,7 @@ from algorithm.core.binary_tree import BinaryTree as bt
 class Solution:
 
     def inorder_traversal(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[int]
-        """
-        res = []
-        stack = []
+        res, stack = [], []
         self._push_nodes(stack, root)
 
         while stack:
@@ -43,5 +38,4 @@ class Solution:
 
 
 t_root = bt.deserialize([1, None, 2, 3])
-t_res = Solution().inorder_traversal(t_root)
-print(t_res)
+print(Solution().inorder_traversal(t_root))

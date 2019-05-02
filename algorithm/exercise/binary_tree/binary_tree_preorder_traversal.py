@@ -19,11 +19,8 @@ from algorithm.core.binary_tree import BinaryTree as bt
 
 
 class Solution:
-    def preorder_traversal(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[int]
-        """
+    @staticmethod
+    def preorder_traversal(root):
         res, stack = [], [root]
         while stack:
             node = stack.pop()
@@ -37,5 +34,4 @@ class Solution:
 
 
 t_root = bt.deserialize([1, None, 2, 3])
-t_res = Solution().preorder_traversal(t_root)
-print(t_res)
+print(Solution().preorder_traversal(t_root))

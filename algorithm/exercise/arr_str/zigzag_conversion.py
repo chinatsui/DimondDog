@@ -35,29 +35,28 @@ class Solution:
     """
 
     @staticmethod
-    def convert(s, numRows):
-        if numRows <= 1:
+    def convert(s, num_rows):
+        if num_rows <= 1:
             return s
 
-        str_list = [[] for _ in range(numRows)]
+        str_list = [[] for _ in range(num_rows)]
 
         i = 0
         while i < len(s):
-            for j in range(numRows):
+            for j in range(num_rows):
                 if i >= len(s):
                     break
                 str_list[j].append(s[i])
                 i += 1
-            for k in range(numRows - 2, 0, -1):
+            for k in range(num_rows - 2, 0, -1):
                 if i >= len(s):
                     break
                 str_list[k].append(s[i])
                 i += 1
 
         res = ''
-        for i in range(numRows):
-            tmp = ''.join(str_list[i])
-            res = ''.join([res, tmp])
+        for _list in str_list:
+            res += ''.join(_list)
 
         return res
 

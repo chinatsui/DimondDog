@@ -17,8 +17,7 @@ class Solution:
     def column_traversal(self, root):
         column_map = dict()
         self._dfs(root, 0, column_map)
-        res = [nodes for (x, nodes) in sorted(column_map.items())]
-        return res
+        return [nodes for (x, nodes) in sorted(column_map.items())]
 
     def _dfs(self, node, x, column_map):
         if not node:
@@ -33,5 +32,4 @@ class Solution:
         self._dfs(node.right, x + 1, column_map)
 
 
-t_root = bt.deserialize([3, 9, 20, None, None, 15, 7])
-print(Solution().column_traversal(t_root))
+print(Solution().column_traversal(bt.deserialize([3, 9, 20, None, None, 15, 7])))

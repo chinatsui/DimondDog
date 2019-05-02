@@ -1,4 +1,6 @@
 """
+LeetCode-103
+
 Given a binary tree, return the zigzag level order traversal of its nodes' values.
 (ie, from left to right, then right to left for the next level and alternate between).
 
@@ -24,18 +26,13 @@ from algorithm.core.binary_tree import BinaryTree as bt
 class Solution:
     @staticmethod
     def zigzag_level_order(root):
-        """
-        :type root: TreeNode
-        :rtype: List[List[int]]
-        """
         if not root:
             return []
 
-        res = []
-        deq = deque([(root, 0)])
+        res, deq = [], deque([(root, 0)])
         while deq:
             (node, level) = deq.popleft()
-            if level >= len(res):
+            if level == len(res):
                 res.append(deque())
 
             tmp = res[level]

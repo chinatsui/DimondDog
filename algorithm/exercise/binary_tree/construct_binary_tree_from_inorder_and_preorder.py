@@ -23,11 +23,6 @@ from algorithm.core.binary_tree import TreeNode
 
 class Solution:
     def build_tree(self, preorder, inorder):
-        """
-        :type preorder: List[int]
-        :type inorder: List[int]
-        :rtype: TreeNode
-        """
         if preorder and inorder:
             return self._build(inorder, 0, len(inorder) - 1, preorder, 0)
         else:

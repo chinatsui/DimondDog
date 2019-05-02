@@ -21,6 +21,9 @@ from algorithm.core.binary_tree import BinaryTree as bt
 
 
 class Solution:
+    """
+    Very simple, think how iterator works, then resolve it.
+    """
 
     def inorder_successor(self, root, val):
         if not root:

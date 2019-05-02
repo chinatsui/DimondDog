@@ -48,6 +48,5 @@ class Solution:
         left_val = max(0, self._dfs(node.left))
         right_val = max(0, self._dfs(node.right))
 
-        tmp = node.val + left_val + right_val
-        self.res = max(tmp, self.res)
+        self.res = max(node.val + left_val + right_val, self.res)
         return max(left_val, right_val) + node.val
