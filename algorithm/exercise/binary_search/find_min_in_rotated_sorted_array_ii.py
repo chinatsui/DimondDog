@@ -26,10 +26,6 @@ Would allow duplicates affect the run-time complexity? How and why?
 class Solution:
     @staticmethod
     def find_min(nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
         lo, hi = 0, len(nums) - 1
         while lo < hi:
             mid = (lo + hi) // 2

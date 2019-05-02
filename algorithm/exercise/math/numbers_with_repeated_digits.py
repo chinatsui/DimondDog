@@ -27,9 +27,9 @@ Note:
 
 class Solution:
     @staticmethod
-    def num_dup_digits_at_most_N(N):
-        L = list(map(int, str(N + 1)))
-        res, n = 0, len(L)
+    def num_dup_digits_at_most_n(num):
+        arr = [int(ch) for ch in str(num + 1)]
+        res, n = 0, len(arr)
 
         def permutation(p, d):
             return 1 if d == 0 else (p - d + 1) * permutation(p, d - 1)
@@ -45,17 +45,22 @@ class Solution:
         # 72300...72339
         # 72340...72345
         s = set()
-        for i, x in enumerate(L):
+        for i in range(len(arr)):
             # leading digit cannot be zero
-            for y in range(0 if i else 1, x):
+            start, di = 1 if i == 0 else 0, arr[i]
+            for y in range(start, di):
                 # e.g. When i reaches 2, we have options of 0...2 for this digit,
                 # however 7, 2 already exists in set, we skip processing 2 as 722** has repeated numbers.
-                if y not in s:
-                    res += permutation(9 - i, n - i - 1)
-            if x in s:
+                if y in s:
+                    continue
+                res += permutation(9 - i, n - i - 1)
+
+            if di in s:
                 break
-            s.add(x)
-        return N - res
+
+            s.add(di)
+
+        return num - res
 
 
-print(Solution().num_dup_digits_at_most_N(72345))
+print(Solution().num_dup_digits_at_most_n(72345))

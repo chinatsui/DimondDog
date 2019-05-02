@@ -23,11 +23,6 @@ Output: -1
 
 class Solution:
     def search(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: int
-        """
         if not nums:
             return -1
 
@@ -62,5 +57,31 @@ class Solution:
         return lo if nums[lo] == target else -1
 
 
-t_res = Solution().search([4, 5, 6, 7, 0, 1, 2], 0)
-print(t_res)
+class Solution2:
+    @staticmethod
+    def search(nums, target):
+        if not nums:
+            return -1
+
+        lo, hi = 0, len(nums) - 1
+        while lo < hi:
+            mi = lo + (hi - lo) // 2
+            if nums[mi] == target:
+                return mi
+
+            if nums[mi] < nums[hi]:
+                # (mi, hi] is sorted
+                if nums[mi] < target <= nums[hi]:
+                    lo = mi + 1
+                else:
+                    hi = mi - 1
+            else:
+                # [lo, mi) is sorted
+                if nums[lo] <= target < nums[mi]:
+                    hi = mi - 1
+                else:
+                    lo = mi + 1
+        return lo if nums[lo] == target else -1
+
+
+print(Solution().search([4, 5, 6, 7, 0, 1, 2], 0))

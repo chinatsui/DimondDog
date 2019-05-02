@@ -18,10 +18,6 @@ Output: false
 class Solution:
     @staticmethod
     def is_perfect_square(num):
-        """
-        :type num: int
-        :rtype: bool
-        """
         lo, hi = 0, num
         while lo < hi:
             mid = (lo + hi) // 2

@@ -1,4 +1,6 @@
 """
+LeetCode-240
+
 Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
 
 Integers in each row are sorted in ascending from left to right.
@@ -26,21 +28,19 @@ class Solution:
 
     @staticmethod
     def search_matrix(matrix, target):
-        """
-        :type matrix: List[List[int]]
-        :type target: int
-        :rtype: bool
-        """
         if not matrix or not matrix[0]:
             return False
 
-        i, j = 0, len(matrix[0]) - 1
-        while i <= len(matrix) - 1 and j >= 0:
-            cur = matrix[i][j]
+        m, n = len(matrix), len(matrix[0])
+        x, y = 0, n - 1
+
+        while x < m and y >= 0:
+            cur = matrix[x][y]
             if cur == target:
                 return True
             elif cur < target:
-                i += 1
+                x += 1
             else:
-                j -= 1
+                y -= 1
+
         return False

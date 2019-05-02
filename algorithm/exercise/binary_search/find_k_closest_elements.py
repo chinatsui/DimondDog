@@ -18,22 +18,14 @@ The value k is positive and will always be smaller than the length of the sorted
 Length of the given array is positive and will not exceed 104
 Absolute value of elements in the array and x will not exceed 104
 """
-import bisect
 
 
-class Solution:
-    @staticmethod
-    def find_closest_elements(arr, k, x):
-        """
-        :type arr: List[int]
-        :type k: int
-        :type x: int
-        :rtype: List[int]
-        """
+class Solution2(object):
+    def find_closest_elements(self, arr, k, x):
         if not arr:
             return []
 
-        left = right = bisect.bisect_left(arr, x)
+        left = right = self._find_num(arr, x)
         while right - left < k:
             if left == 0:
                 return arr[:k]
@@ -48,5 +40,22 @@ class Solution:
 
         return arr[left:right]
 
+    @staticmethod
+    def _find_num(arr, target):
+        lo, hi = 0, len(arr) - 1
 
-print(Solution().find_closest_elements([1, 2, 3, 5, 6], 4, 4))
+        while lo < hi:
+            mi = lo + (hi - lo) // 2
+            if arr[mi] == target:
+                return mi
+            elif arr[mi] < target:
+                lo = mi + 1
+            else:
+                hi = mi
+
+        if arr[lo] == target:
+            return lo
+        elif arr[lo] < target:
+            return lo + 1
+        else:
+            return lo

@@ -1,5 +1,5 @@
 """
-LeetCode-1012
+LeetCode-1009
 
 Every non-negative integer N has a binary representation.
 For example, 5 can be represented as "101" in binary, 11 as "1011" in binary, and so on.
@@ -34,15 +34,11 @@ Note:
 class Solution(object):
     @staticmethod
     def bit_wise_complement(N):
-        """
-        :type N: int
-        :rtype: int
-        """
-        src = bin(N)
-        dst = '0b'
-        for i in range(2, len(src)):
-            dst += str(int(src[i]) ^ 1)
-        return int(dst, 2)
+        bin_resp = '{:0b}'.format(N)
+        res = ''
+        for ch in bin_resp:
+            res += str(int(ch) ^ 1)
+        return int(res, 2)
 
 
 print(Solution().bit_wise_complement(5))

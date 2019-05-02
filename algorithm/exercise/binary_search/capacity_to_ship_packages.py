@@ -1,5 +1,5 @@
 """
-LeetCode-1014
+LeetCode-1011
 
 A conveyor belt has packages that must be shipped from one port to another within D days.
 
@@ -61,16 +61,20 @@ class Solution(object):
 
     @staticmethod
     def _can_ship(weights, D, cap):
-        days, vol = 1, 0
+        days, vol = 0, 0
         for w in weights:
-            if vol + w <= cap:
-                vol += w
+            vol += w
+            if vol < cap:
+                continue
+            elif vol == cap:
+                days += 1
+                vol = 0
             else:
                 days += 1
-                if days > D:
-                    return False
                 vol = w
-        return True
+        if w > 0:
+            days += 1
+        return True if days <= D else False
 
 
 print(Solution().ship_with_days([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5))
