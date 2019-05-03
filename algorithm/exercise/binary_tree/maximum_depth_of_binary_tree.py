@@ -29,5 +29,4 @@ class Solution:
 
 
 t_root = bt.deserialize([3, 9, 20, None, None, 15, 7])
-t_res = Solution().max_depth(t_root)
-print(t_res)
+print(Solution().max_depth(t_root))

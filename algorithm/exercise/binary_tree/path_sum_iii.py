@@ -1,9 +1,12 @@
 """
+LeetCode-437
+
 You are given a binary tree in which each node contains an integer value.
 
 Find the number of paths that sum to a given value.
 
-The path does not need to start or end at the root or a leaf, but it must go downwards (traveling only from parent nodes to child nodes).
+The path does not need to start or end at the root or a leaf, but it must
+go downwards (traveling only from parent nodes to child nodes).
 
 The tree has no more than 1,000 nodes and the values are in the range -1,000,000 to 1,000,000.
 
@@ -31,9 +34,7 @@ from algorithm.core.binary_tree import BinaryTree as bt
 class Solution:
 
     def path_sum(self, root, sum):
-        cache = dict()
-        cache[0] = 1
-        return self._dfs(root, 0, sum, cache)
+        return self._dfs(root, 0, sum, {0: 1})
 
     def _dfs(self, node, cur_sum, sum, cache):
         if not node:

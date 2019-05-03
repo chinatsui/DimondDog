@@ -23,15 +23,22 @@ from algorithm.core.binary_tree import TreeNode
 
 class Solution:
     def sorted_array_to_bst(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: TreeNode
-        """
         if not nums:
             return None
 
-        m = len(nums) // 2
-        root = TreeNode(nums[m])
-        root.left = self.sorted_array_to_bst(nums[:m])
-        root.right = self.sorted_array_to_bst(nums[m + 1:])
+        return self._construct(nums, 0, len(nums) - 1)
+
+    def _construct(self, nums, lo, hi):
+        if lo > hi:
+            return None
+
+        if lo == hi:
+            return TreeNode(nums[lo])
+
+        mi = lo + (hi - lo) // 2
+
+        root = TreeNode(nums[mi])
+        root.left = self._construct(nums, lo, mi - 1)
+        root.right = self._construct(nums, mi + 1, hi)
+
         return root

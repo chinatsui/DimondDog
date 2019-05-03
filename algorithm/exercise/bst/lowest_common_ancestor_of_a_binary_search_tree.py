@@ -36,18 +36,13 @@ p and q are different and both values will exist in the BST.
 
 class Solution(object):
     def lowest_common_ancestor(self, root, p, q):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: TreeNode
-        """
-        if p.val > q.val:
-            p, q = q, p
-
-        if p.val <= root.val <= q.val:
+        if root in (None, p, q):
             return root
-        elif q.val < root.val:
+
+        if p.val < root.val > q.val:
             return self.lowest_common_ancestor(root.left, p, q)
-        else:
+
+        if p.val > root.val < q.val:
             return self.lowest_common_ancestor(root.right, p, q)
+
+        return root

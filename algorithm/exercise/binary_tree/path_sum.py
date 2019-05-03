@@ -23,12 +23,7 @@ from algorithm.core.binary_tree import BinaryTree as bt
 
 
 class Solution:
-    def hasPathSum(self, root, sum):
-        """
-        :type root: TreeNode
-        :type sum: int
-        :rtype: bool
-        """
+    def has_path_sum(self, root, sum):
         if root is None:
             return False
 
@@ -36,9 +31,8 @@ class Solution:
             return root.val == sum
         else:
             sum -= root.val
-            return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
+            return self.has_path_sum(root.left, sum) or self.has_path_sum(root.right, sum)
 
 
 t_root = bt.deserialize([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, 1])
-t_res = Solution().hasPathSum(t_root, 22)
-print(t_res)
+print(Solution().has_path_sum(t_root, 22))

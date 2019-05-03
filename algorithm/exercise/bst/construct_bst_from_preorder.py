@@ -11,24 +11,25 @@ class Solution:
         return self._construct(preorder, 0, len(preorder) - 1)
 
     def _construct(self, preorder, lo, hi):
-        if lo > hi:
+        if lo > hi:  # left child is None
             return None
 
-        if lo == hi:
-            return TreeNode(preorder[lo])
-
         root = TreeNode(preorder[lo])
-        pivot = lo
+
+        if lo == hi:
+            return root
+
+        pi = lo
         for i in range(lo + 1, hi + 1):
-            if preorder[i] > preorder[pivot]:
-                pivot = i
+            if preorder[i] > preorder[pi]:
+                pi = i
                 break
 
-        if pivot == lo:
-            root.left = self._construct(preorder, pivot + 1, hi)
+        if pi == lo:  # right child is None
+            root.left = self._construct(preorder, pi + 1, hi)
         else:
-            root.left = self._construct(preorder, lo + 1, pivot - 1)
-            root.right = self._construct(preorder, pivot, hi)
+            root.left = self._construct(preorder, lo + 1, pi - 1)
+            root.right = self._construct(preorder, pi, hi)
 
         return root
 

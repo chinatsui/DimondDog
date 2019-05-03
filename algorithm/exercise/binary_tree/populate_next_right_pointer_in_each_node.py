@@ -53,3 +53,20 @@ class Solution:
                         root.right.next = root.next.left
                 root = root.next
             head = head.left
+        return root
+
+
+class Solution2(object):
+    @staticmethod
+    def connect(root):
+        head = root
+        while head:
+            prev, cur = None, head
+            while cur and cur.left:
+                cur.left.next = cur.right
+                if prev:
+                    prev.right.next = cur.left
+                prev = cur
+                cur = cur.next
+            head = head.left
+        return root

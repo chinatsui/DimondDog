@@ -1,7 +1,8 @@
 """
 Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
 
-For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+For this problem, a height-balanced binary tree is defined as a binary tree
+in which the depth of the two subtrees of every node never differ by more than 1.
 
 Example:
 
@@ -16,15 +17,10 @@ One possible answer is: [0,-3,9,-10,null,5], which represents the following heig
  -10  5
 """
 from algorithm.core.binary_tree import TreeNode
-from algorithm.core.linked_list import ListNode
 
 
 class Solution:
-    def sortedListToBST(self, head):
-        """
-        :type head: ListNode
-        :rtype: TreeNode
-        """
+    def sorted_list_to_bst(self, head):
         if not head:
             return
 
@@ -41,10 +37,10 @@ class Solution:
         # left child
         if prev:
             prev.next = None
-            cur.left = self.sortedListToBST(head)
+            cur.left = self.sorted_list_to_bst(head)
 
         # right child
         if slow.next:
-            cur.right = self.sortedListToBST(slow.next)
+            cur.right = self.sorted_list_to_bst(slow.next)
 
         return cur

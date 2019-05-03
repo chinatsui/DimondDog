@@ -32,62 +32,57 @@ Note:
 All of the nodes' values will be unique.
 p and q are different and both values will exist in the binary tree.
 """
-from algorithm.core.binary_tree import BinaryTree as bt
-from algorithm.core.binary_tree import TreeNode
 
 
 class Solution(object):
-    def lowestCommonAncestor(self, root, p, q):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: TreeNode
-        """
-        to_from = {}
-        self._dfs(root, to_from)
-        p_path = self._path_to(root, p, to_from)
-        q_path = self._path_to(root, q, to_from)
+    def __init__(self):
+        self.to_from = dict()
 
-        for p_node in p_path:
-            for q_node in q_path:
-                if p_node == q_node:
-                    return p_node
+    def lowest_common_ancestor(self, root, p, q):
+        if not root:
+            return None
 
-    def _dfs(self, node, to_from):
-        if node is None:
+        self._dfs(root)
+
+        path_to_p = self._path_to(p)
+        path_to_q = self._path_to(q)
+
+        for m in path_to_p:
+            for n in path_to_q:
+                if m == n:
+                    return m
+
+        return None
+
+    def _dfs(self, node):
+        if not node:
             return
 
         if node.left:
-            to_from[node.left] = node
-            self._dfs(node.left, to_from)
+            self.to_from[node.left] = node
+            self._dfs(node.left)
 
         if node.right:
-            to_from[node.right] = node
-            self._dfs(node.right, to_from)
+            self.to_from[node.right] = node
+            self._dfs(node.right)
 
-    @staticmethod
-    def _path_to(root, node, to_from):
+    def _path_to(self, node):
         path = []
-        while node != root:
+        while node:
             path.append(node)
-            node = to_from[node]
-        path.append(root)
+            node = self.to_from.get(node)
         return path
 
 
-t_root = bt.deserialize([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
-t_root = TreeNode(3)
-t_root.left = TreeNode(5)
-t_root.right = TreeNode(1)
-t_root.left.left = TreeNode(6)
-t_root.left.right = TreeNode(2)
-t_root.right.left = TreeNode(0)
-t_root.right.right = TreeNode(8)
-t_root.left.right.left = TreeNode(7)
-t_root.left.right.right = TreeNode(4)
+class Solution2:
+    """
+    Very smart solution, think it over and over.
+    """
+    def lowest_common_ancestor(self, root, p, q):
+        if root in (None, p, q):
+            return root
 
-p = t_root.left
-q = t_root.left.right.right
+        left = self.lowest_common_ancestor(root.left, p, q)
+        right = self.lowest_common_ancestor(root.right, p, q)
 
-print(Solution().lowestCommonAncestor(t_root, p, q).val)
+        return root if left and right else left or right

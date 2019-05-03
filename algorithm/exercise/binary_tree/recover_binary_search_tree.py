@@ -1,4 +1,6 @@
 """
+LeetCode-99
+
 Two elements of a binary search tree (BST) are swapped by mistake.
 Recover the tree without changing its structure.
 
@@ -46,12 +48,12 @@ class Solution:
 
     def __init__(self):
         self.prev = TreeNode(float('-inf'))
-        self.first = None
-        self.second = None
+        self.large = None
+        self.small = None
 
-    def recoverTree(self, root):
+    def recover_tree(self, root):
         self._traverse(root)
-        self.first.val, self.second.val = self.second.val, self.first.val
+        self.large.val, self.small.val = self.small.val, self.large.val
 
     def _traverse(self, node):
         if not node:
@@ -59,11 +61,11 @@ class Solution:
 
         self._traverse(node.left)
 
-        if not self.first and self.prev.val > node.val:
-            self.first = self.prev
+        if not self.large and self.prev.val > node.val:
+            self.large = self.prev
 
-        if self.first and self.prev.val > node.val:
-            self.second = node
+        if self.large and self.prev.val > node.val:
+            self.small = node
 
         self.prev = node
         self._traverse(node.right)

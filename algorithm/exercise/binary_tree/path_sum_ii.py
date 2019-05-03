@@ -25,20 +25,19 @@ Return:
 
 class Solution:
 
-    def pathSum(self, root, sum):
+    def path_sum(self, root, sum):
         res = []
-        self._dfs(root, sum, [], res)
+        self._dfs(root, sum, res, [])
         return res
 
-    def _dfs(self, node, sum, cur, res):
+    def _dfs(self, node, sum, res, cur):
         if not node:
             return
 
-        if node.left is None and node.right is None:
+        if not node.left and not node.right:
             if node.val == sum:
                 res.append(cur + [node.val])
-            else:
-                return
+            return
 
-        self._dfs(node.left, sum - node.val, cur + [node.val], res)
-        self._dfs(node.right, sum - node.val, cur + [node.val], res)
+        self._dfs(node.left, sum - node.val, res, cur + [node.val])
+        self._dfs(node.right, sum - node.val, res, cur + [node.val])
