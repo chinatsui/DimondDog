@@ -12,10 +12,9 @@ class Solution:
         if not head:
             return
 
-        n = 1
-        tail = head
-        while tail.next:
-            tail = tail.next
+        n, cur = 0, head
+        while cur:
+            cur = cur.next
             n += 1
 
         for i in range(n):

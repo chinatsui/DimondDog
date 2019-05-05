@@ -23,25 +23,23 @@ from algorithm.core.binary_tree import BinaryTree
 
 class Solution:
     def binary_tree_paths(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[str]
-        """
+        if not root:
+            return []
+
         res = []
-        self._dfs(root, '', res)
+        self._dfs(root, res, '')
         return res
 
-    def _dfs(self, node, cur, res):
-        if node is None:
-            return
-
-        if node.left is None and node.right is None:
+    def _dfs(self, node, res, cur):
+        if not node.left and not node.right:
             res.append(cur + str(node.val))
             return
 
-        nxt_cur = cur + str(node.val) + '->'
-        self._dfs(node.left, nxt_cur, res)
-        self._dfs(node.right, nxt_cur, res)
+        if node.left:
+            self._dfs(node.left, res, cur + str(node.val) + '->')
+
+        if node.right:
+            self._dfs(node.right, res, cur + str(node.val) + '->')
 
 
 t_root = BinaryTree.deserialize([1, 2, 3, None, 5])

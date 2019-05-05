@@ -20,20 +20,16 @@ Explanation:
 
 class Solution:
     def right_side_view(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[int]
-        """
-        view = dict()
-        self._dfs(root, 0, view)
-        return list(view.values())
+        res = []
+        self._dfs(root, 0, res)
+        return res
 
     def _dfs(self, node, depth, view):
-        if node is None:
+        if not node:
             return
 
-        if depth not in view:
-            view[depth] = node.val
+        if depth == len(view):
+            view.append(node.val)
 
         self._dfs(node.right, depth + 1, view)
         self._dfs(node.left, depth + 1, view)

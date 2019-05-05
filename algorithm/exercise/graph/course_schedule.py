@@ -32,22 +32,22 @@ class Solution(object):
 
     @staticmethod
     def can_finish(num_courses, prerequisites):
-        dg = DirectedGraph(num_courses)
+        graph = DirectedGraph(num_courses)
         for pair in prerequisites:
-            dg.add(pair[0], pair[1])
-        dg_cycle_check = DirectedGraphCycleCheck(dg)
-        return not dg_cycle_check.has_cycle
+            graph.add(pair[0], pair[1])
+        check = DirectedGraphCycleCheck(graph)
+        return not check.has_cycle
 
 
 class DirectedGraphCycleCheck:
 
-    def __init__(self, g):
+    def __init__(self, graph):
         self.has_cycle = False
         self.on_stack = set()
         self.visited = set()
-        for i in range(g.n):
+        for i in range(graph.v_cnt):
             if i not in self.visited:
-                self._dfs(g, i)
+                self._dfs(graph, i)
 
     def _dfs(self, g, v):
         if self.has_cycle:
@@ -66,9 +66,9 @@ class DirectedGraphCycleCheck:
 
 class DirectedGraph:
 
-    def __init__(self, n):
-        self.n = n
-        self.adjacent = [set() for _ in range(n)]
+    def __init__(self, count):
+        self.v_cnt = count
+        self.adjacent = [set() for _ in range(count)]
 
     def add(self, v, w):
         v_adj = self.adjacent[v]

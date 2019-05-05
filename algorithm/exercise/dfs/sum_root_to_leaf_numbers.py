@@ -1,5 +1,5 @@
 """
-LeetCode - 129
+LeetCode-129
 
 Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
 
@@ -41,10 +41,6 @@ Therefore, sum = 495 + 491 + 40 = 1026.
 
 class Solution:
     def sum_numbers(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
         res = [0]
         self._dfs(root, 0, res)
         return res[0]

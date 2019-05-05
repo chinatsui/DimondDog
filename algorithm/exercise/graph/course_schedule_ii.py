@@ -35,70 +35,49 @@ You may assume that there are no duplicate edges in the input prerequisites.
 class Solution:
     @staticmethod
     def find_order(num_courses, prerequisites):
-        """
-        :type num_courses: int
-        :type prerequisites: List[List[int]]
-        :rtype: List[int]
-        """
-        if not num_courses:
-            return []
-
-        dg = DirectedGraph(num_courses)
-        dg_dfs_order = DirectedGraphDFSOrder(dg)
-
+        graph = DirectedGraph(num_courses)
         for pair in prerequisites:
-            dg.add(pair[0], pair[1])
-
-        if dg_dfs_order.has_cycle():
-            return []
-        else:
-            return dg_dfs_order.order_list
+            graph.add(pair[0], pair[1])
+        check = DirectedGraphCheck(graph)
+        return check.tsort if not check.cycle_found else []
 
 
-class DirectedGraphDFSOrder:
+class DirectedGraph:
 
-    def __init__(self, g):
+    def __init__(self, count):
+        self.v_cnt = count
+        self.adj = [set() for _ in range(count)]
+
+    def add(self, v, w):
+        self.adj[v].add(w)
+
+
+class DirectedGraphCheck:
+
+    def __init__(self, graph):
         self.cycle_found = False
         self.visited = set()
         self.on_stack = set()
-        self.order_list = []
+        self.tsort = []
 
-        for v in range(g.cnt):
+        for v in range(graph.v_cnt):
             if v not in self.visited:
-                self._dfs(g, v)
+                self._dfs(graph, v)
 
-    def has_cycle(self):
-        return self.cycle_found
-
-    def _dfs(self, g, v):
+    def _dfs(self, graph, v):
         if self.cycle_found:
             return
 
         self.visited.add(v)
         self.on_stack.add(v)
-        for w in g.adjacents[v]:
+        for w in graph.adj[v]:
             if w not in self.visited:
-                self._dfs(g, w)
+                self._dfs(graph, w)
             elif w in self.on_stack:
                 self.cycle_found = True
-                break
+                return
         self.on_stack.remove(v)
-        self.order_list.append(v)
-
-    def order(self):
-        return list(reversed(self.order_list))
+        self.tsort.append(v)
 
 
-class DirectedGraph:
-
-    def __init__(self, n):
-        self.cnt = n
-        self.adjacent = [set() for _ in range(n)]
-
-    def add(self, v, w):
-        adj_set = self.adjacent[v]
-        if w not in adj_set:
-            adj_set.add(w)
-
-
-print(Solution().find_order(2, [[0, 1]]))
+print(Solution().find_order(4, [[1, 0], [2, 0], [3, 1], [3, 2]]))

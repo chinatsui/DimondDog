@@ -1,4 +1,6 @@
 """
+LeetCode-114
+
 Given a binary tree, flatten it to a linked list in-place.
 
 For example, given the following tree:
@@ -46,10 +48,6 @@ class Solution:
     """
 
     def flatten(self, root):
-        """
-        :type root: TreeNode
-        :rtype: void Do not return anything, modify root in-place instead.
-        """
         if not root:
             return
 

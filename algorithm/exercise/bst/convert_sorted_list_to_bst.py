@@ -1,4 +1,6 @@
 """
+LeetCode-109
+
 Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
 
 For this problem, a height-balanced binary tree is defined as a binary tree
@@ -17,30 +19,36 @@ One possible answer is: [0,-3,9,-10,null,5], which represents the following heig
  -10  5
 """
 from algorithm.core.binary_tree import TreeNode
+from algorithm.core.binary_tree import BinaryTree
+from algorithm.core.linked_list import ListNodeUtil
 
 
 class Solution:
     def sorted_list_to_bst(self, head):
         if not head:
-            return
+            return None
 
-        prev, slow, fast = None, head, head.next
-        while fast:
+        prev, slow, fast = None, head, head
+
+        while fast and fast.next:
             prev = slow
             slow = slow.next
-            fast = fast.next
-            if fast:
-                fast = fast.next
+            fast = fast.next.next
 
-        cur = TreeNode(slow.val)
+        root = TreeNode(slow.val)
 
         # left child
         if prev:
             prev.next = None
-            cur.left = self.sorted_list_to_bst(head)
+            root.left = self.sorted_list_to_bst(head)
 
         # right child
         if slow.next:
-            cur.right = self.sorted_list_to_bst(slow.next)
+            root.right = self.sorted_list_to_bst(slow.next)
 
-        return cur
+        return root
+
+
+t_head = ListNodeUtil.build_linked_list([-10, -3, 0, 5, 9])
+t_root = Solution().sorted_list_to_bst(t_head)
+print(BinaryTree.serialize(t_root))
