@@ -1,5 +1,5 @@
 """
-LeetCode-117
+LeetCode - 117
 
 Given a binary tree
 
@@ -50,11 +50,7 @@ class Solution:
             cur = head
             child_cur = None
 
-            if head.left:
-                head = head.left
-            else:
-                head = head.right
-
+            # connect next pointers for current level
             while cur:
                 if cur.left:
                     child_cur = cur.left
@@ -73,8 +69,17 @@ class Solution:
                             child_cur.next = cur.next.right
                             child_cur = child_cur.next
                 cur = cur.next
-                if not head and cur:
-                    if cur.left:
-                        head = cur.left
-                    else:
-                        head = cur.right
+
+            # find the head of next level
+            next_head = None
+            while not next_head:
+                if head.left:
+                    next_head = head.left
+                else:
+                    next_head = head.right
+
+                if not head.next:
+                    break
+                else:
+                    head = head.next
+            head = next_head

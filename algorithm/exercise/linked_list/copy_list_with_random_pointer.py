@@ -18,10 +18,6 @@ from algorithm.core.linked_list import RandomListNode
 class Solution1(object):
     @staticmethod
     def copy_random_list(head):
-        """
-        :type head: RandomListNode
-        :rtype: RandomListNode
-        """
         cache = {}
         dummy_node = RandomListNode(0)
         cur = dummy_node
@@ -52,27 +48,31 @@ class Solution2:
     @staticmethod
     def copy_random_list(head):
         cur = head
-        while cur:  # Deduplicate each node and link it to the original node one by one
+
+        # link copy node to original node one by one
+        while cur:
             copy = RandomListNode(cur.label)
             nxt = cur.next
             cur.next = copy
             copy.next = nxt
             cur = nxt
 
+        # link random pointer
         cur = head
-        while cur:  # Link random pointer for each deduplicate node.
+        while cur:
             if cur.random:
                 cur.next.random = cur.random.next
             cur = cur.next.next
 
+        # restore original linked list to construct result.
         cur = head
-        pseudoHead = RandomListNode(0)
-        pseudoCur = pseudoHead
+        dummy_node = RandomListNode(0)
+        dummy_cur = dummy_node
         while cur:  # Restore the answer.
             copy = cur.next
-            pseudoCur.next = copy
-            pseudoCur = pseudoCur.next
+            dummy_cur.next = copy
+            dummy_cur = dummy_cur.next
             cur.next = copy.next
             cur = cur.next
 
-        return pseudoHead.next
+        return dummy_node.next

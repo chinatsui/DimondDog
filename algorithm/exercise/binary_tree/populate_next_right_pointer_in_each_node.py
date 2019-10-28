@@ -45,28 +45,12 @@ class Solution:
     def connect(root):
         head = root
         while head:
-            root = head
-            while root:
-                if root.left:
-                    root.left.next = root.right
-                    if root.next:
-                        root.right.next = root.next.left
-                root = root.next
-            head = head.left
-        return root
-
-
-class Solution2(object):
-    @staticmethod
-    def connect(root):
-        head = root
-        while head:
-            prev, cur = None, head
-            while cur and cur.left:
-                cur.left.next = cur.right
-                if prev:
-                    prev.right.next = cur.left
-                prev = cur
+            cur = head
+            while cur:
+                if cur.left:
+                    cur.left.next = cur.right
+                    if cur.next:
+                        cur.right.next = cur.next.left
                 cur = cur.next
             head = head.left
         return root
